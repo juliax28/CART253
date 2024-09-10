@@ -1,22 +1,29 @@
 /**
- * Function Calls
+ * The Blank Page
  * Julia Axiuk
  * 
- * Function Calls Examples
+ * Exploration of existential angst!! The blank page!!
+ * Non interactive to convey the writer's block!!
  */
 
 "use strict";
 
 
 function setup() {
-    // once at the beginning
+
+    /**
+     * Creates the canvas
+     */
     createCanvas(640, 480);
 }
 
 
 
 function draw() {
-    // every frame
+
+    /** 
+     * draws the desktop and the blank piece of paper
+     */
     background(255, 100, 100);
     rect(200, 80, 240, 320);
 }
