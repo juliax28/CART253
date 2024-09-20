@@ -7,7 +7,14 @@
  */
 
 "use strict";
+let holeSize = 180;
+let holeShade = 0;
+let holeX = 140;
+let holeY = 175;
 
+let cheeseRed = 255;
+let cheeseGreen = 255;
+let cheeseBlue = 0;
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
@@ -22,11 +29,11 @@ function setup() {
 */
 function draw() {
     //the cheese
-    background(255, 255, 0);
+    background(cheeseBlue, cheeseGreen, cheeseRed);
     //the hole
     push();
     noStroke();
-    fill(0);
-    ellipse(140, 175, 100);
+    fill(holeShade);
+    ellipse(holeX, holeY, holeSize);
     pop();
 }
