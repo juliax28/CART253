@@ -23,6 +23,15 @@ let sunX = 500;
 let sunY = 70;
 let sunSize = 100;
 
+let sun = {
+    red: 255,
+    green: 255,
+    blue: 0,
+    x: 500,
+    y: 70,
+    size: 100
+
+};
 // My self-esteem
 
 // Greyscale shade
@@ -49,9 +58,9 @@ function draw() {
 
     // The sun
     push();
-    fill(sunRed, sunGreen, sunBlue);
+    fill(sun.red, sun.green, sun.blue);
     noStroke();
-    ellipse(sunX, sunY, sunSize);
+    ellipse(sun.x, sun.y, sun.size);
     pop();
 
     // My self esteem
