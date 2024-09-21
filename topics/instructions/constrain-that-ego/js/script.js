@@ -34,6 +34,7 @@ function draw() {
     ego.fill = ego.fill - 0.5;
     // Size gets bigger, symbolizing taking up emotional space
     ego.size = ego.size + 1;
+    ego.size = constrain(ego.size, 0, width);
 
     // Draw the ego
     push();
