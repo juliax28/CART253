@@ -9,7 +9,7 @@
 "use strict";
 
 let bird = {
-    x: 120.
+    x: 120,
     y: 180,
     size: 50
 };
