@@ -43,7 +43,7 @@ function draw() {
     background("#B6E853");
     moveSheep();
     drawSheep();
-    checkSheepTrust();
+    drawSheepTrust();
 
 }
 //sheep follows mouse
@@ -63,11 +63,12 @@ function drawSheep() {
 }
 // Check to see if the mouse is clicked,  trust points gp up.
 //Sheep will be stop following the mouse if trsut limit is reached.
-function checkSheepTrust() {
+function drawSheepTrust() {
     if (mouseIsPressed) sheep.trust = sheep.trust + 5;
     if (sheep.trust > 25) {
-        sheep.shape.x = pwinMouseX;
-        sheep.shape.y = pwinMouseY;
+        sheep.shape.x = pmouseX;
+        sheep.shape.y = pmouseY;
+        console.log(sheep.trust);
     }
 
 }
