@@ -21,10 +21,8 @@ let sheep =
         alive: "#FFF",
         dead: "#FF4433"
     },
-    trust:
-    {
-        trust: 0,
-    },
+    trust: 0,
+
 
 }
 //timer
@@ -46,6 +44,7 @@ function draw() {
     moveSheep();
     drawSheep();
     checkSheepTrust();
+
 }
 //sheep follows mouse
 function moveSheep() {
@@ -62,13 +61,26 @@ function drawSheep() {
     pop();
 
 }
-// Check to see if the mouse is clicked,  lose trust points.
-//Sheep will be stop following the mouse if all trust is lost.
+// Check to see if the mouse is clicked,  trust points gp up.
+//Sheep will be stop following the mouse if trsut limit is reached.
 function checkSheepTrust() {
-    if (mouseIsClicked) {
-        trust = (trust + 5);
-
+    if (mouseIsPressed) sheep.trust = sheep.trust + 5;
+    if (sheep.trust > 25) {
+        sheep.shape.x = pwinMouseX;
+        sheep.shape.y = pwinMouseY;
     }
+
 }
 
+
+
+
+
+// make the sheep jump when the mouse is clicked
+//function sheepJump() {
+//if (mouseIsPressed) {
+//  sheep.shape.y = (mouseY + 5)
+// };
+//      else { sheep.shape.y = mouseY }
+//}
 
