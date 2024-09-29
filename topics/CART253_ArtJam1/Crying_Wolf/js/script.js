@@ -18,12 +18,12 @@ let sheep =
     },
     fills:
     {
-        alive: "#FFF",
-        dead: "#FF4433"
+        alive: "#FFFFFF",
+        dead: "#FF4433",
     },
     trust: 0,
     following: true,
-    LossofTrust: 500,
+    lossOfTrust: 200,
 
 
 };
@@ -33,16 +33,13 @@ let wolf =
     shape:
     {
         x: 200,
-        y: 200,
+        y: 10,
         size: 55,
 
     },
 };
 //timer
 //let timer = 0;
-
-//wolf attributes
-//TBD
 
 
 /**
@@ -60,16 +57,11 @@ function draw() {
     drawSheepTrust();
     //wolf
     drawWolf();
+    //wolf attributes
+    wolfInteract();
 
 }
-//sheep follows mouse
-function moveSheep() {
-    if (!sheep.following) {
-        return;
-    }
-    sheep.shape.x = mouseX;
-    sheep.shape.y = mouseY;
-}
+
 
 //draw the sheep
 function drawSheep() {
@@ -84,21 +76,49 @@ function drawSheep() {
 //Sheep will be stop following the mouse if trust limit is reached.
 function drawSheepTrust() {
     if (mouseIsPressed) sheep.trust += 5;
-    if (sheep.trust > sheep.LossofTrust) {
+    if (sheep.trust > sheep.lossOfTrust) {
         //sheep stops following
         sheep.following = false;
-        console.log(sheep.trust);
     }
 
 }
 function drawWolf() {
+
+
+    //wolfappearance
     push();
     fill("#647275");
     noStroke();
-    rect(wolf.shape.x, wolf.shape.y, 20, wolf.shape.size);
+    ellipse(wolf.shape.x, wolf.shape.y, wolf.shape.size);
     pop();
+    //motion on the wolf
+    wolf.shape.x = wolf.shape.x - 1;
+    wolf.shape.y = wolf.shape.x + 1;
+
+
+
 
 };
+
+
+function wolfInteract() {
+    const distance = dist(sheep.shape.x, sheep.shape.y, wolf.shape.x, wolf.shape.y);
+    const wolfOverlapsSheep = (distance < wolf.shape.size / 2);
+    if (wolfOverlapsSheep) {
+        sheep.fills = sheep.fills.dead;
+        sheep.following = false;
+    }
+
+
+}
+//sheep follows mouse
+function moveSheep() {
+    if (!sheep.following) {
+        return;
+    }
+    sheep.shape.x = mouseX;
+    sheep.shape.y = mouseY;
+}
 
 
 
