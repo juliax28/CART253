@@ -22,9 +22,11 @@ let sheep =
         dead: "#FF4433"
     },
     trust: 0,
+    following: true,
+    LossofTrust: 500,
 
 
-}
+};
 //timer
 //let timer = 0;
 
@@ -48,6 +50,9 @@ function draw() {
 }
 //sheep follows mouse
 function moveSheep() {
+    if (!sheep.following) {
+        return;
+    }
     sheep.shape.x = mouseX;
     sheep.shape.y = mouseY;
 }
@@ -64,10 +69,10 @@ function drawSheep() {
 // Check to see if the mouse is clicked,  trust points gp up.
 //Sheep will be stop following the mouse if trsut limit is reached.
 function drawSheepTrust() {
-    if (mouseIsPressed) sheep.trust = sheep.trust + 5;
-    if (sheep.trust > 25) {
-        sheep.shape.x = pmouseX;
-        sheep.shape.y = pmouseY;
+    if (mouseIsPressed) sheep.trust += 5;
+    if (sheep.trust > sheep.LossofTrust) {
+        //sheep stops following
+        sheep.following = false;
         console.log(sheep.trust);
     }
 
