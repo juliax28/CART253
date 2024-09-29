@@ -27,6 +27,17 @@ let sheep =
 
 
 };
+
+let wolf =
+{
+    shape:
+    {
+        x: 200,
+        y: 200,
+        size: 55,
+
+    },
+};
 //timer
 //let timer = 0;
 
@@ -43,9 +54,12 @@ function setup() {
 //draw background
 function draw() {
     background("#B6E853");
+    //sheep
     moveSheep();
     drawSheep();
     drawSheepTrust();
+    //wolf
+    drawWolf();
 
 }
 //sheep follows mouse
@@ -66,8 +80,8 @@ function drawSheep() {
     pop();
 
 }
-// Check to see if the mouse is clicked,  trust points gp up.
-//Sheep will be stop following the mouse if trsut limit is reached.
+// Check to see if the mouse is clicked,  trust points go up.
+//Sheep will be stop following the mouse if trust limit is reached.
 function drawSheepTrust() {
     if (mouseIsPressed) sheep.trust += 5;
     if (sheep.trust > sheep.LossofTrust) {
@@ -77,7 +91,14 @@ function drawSheepTrust() {
     }
 
 }
+function drawWolf() {
+    push();
+    fill("#647275");
+    noStroke();
+    rect(wolf.shape.x, wolf.shape.y, 20, wolf.shape.size);
+    pop();
 
+};
 
 
 
