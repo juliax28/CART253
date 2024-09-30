@@ -34,10 +34,14 @@ let wolf =
 {
     shape:
     {
-        x: 200,
-        y: 10,
+        x: 400,
+        y: -150,
         size: 55,
 
+    },
+    velocity: {
+        x: 1,
+        y: 2,
     },
 };
 //timer
@@ -94,8 +98,8 @@ function drawWolf() {
     ellipse(wolf.shape.x, wolf.shape.y, wolf.shape.size);
     pop();
     //motion on the wolf
-    wolf.shape.x = wolf.shape.x - 1;
-    wolf.shape.y = wolf.shape.y + 1;
+    wolf.shape.x = wolf.shape.x - wolf.velocity.x;
+    wolf.shape.y = wolf.shape.y + wolf.velocity.y;
 
 
 
