@@ -25,7 +25,7 @@ let sheep =
     },
     trust: 0,
     following: true,
-    lossOfTrust: 200,
+    lossOfTrust: 100,
 
 
 };
@@ -61,7 +61,7 @@ function draw() {
     const shade = map(timer, 0, 500, 255, 0);
 
     background(shade);
-
+    //as night falls, the wolf will appear
     if (timer > 500) {
         drawWolf();
     }
@@ -70,7 +70,6 @@ function draw() {
     moveSheep();
     drawSheep();
     drawSheepTrust();
-    //wolf
 
     //wolf attributes
     wolfInteract();
@@ -85,7 +84,52 @@ function drawSheep() {
     push();
     fill(sheep.fill);
     noStroke();
-    ellipse(sheep.shape.x + 15, sheep.shape.y + 15, sheep.shape.size);
+    ellipse(sheep.shape.x, sheep.shape.y, sheep.shape.size);
+    pop();
+
+    //Sheep fur "bubbles"
+    //top right
+    push();
+    fill(sheep.fill);
+    noStroke();
+    ellipse(sheep.shape.x + 15, sheep.shape.y - 20, 20);
+    pop();
+    // top left
+    push();
+    fill(sheep.fill);
+    noStroke();
+    ellipse(sheep.shape.x - 15, sheep.shape.y - 21, 20);
+    pop();
+    //bottom left
+    push();
+    fill(sheep.fill);
+    noStroke();
+    ellipse(sheep.shape.x - 15, sheep.shape.y + 21, 15);
+    pop();
+
+    push();
+    fill(sheep.fill);
+    noStroke();
+    ellipse(sheep.shape.x - 16, sheep.shape.y + 22, 10);
+    pop();
+
+    //sheep eye R
+    push();
+    fill("#ef4766")
+    stroke("#AFFF");
+    ellipse(sheep.shape.x + 10, sheep.shape.y, 10);
+    pop();
+    //sheep eye L
+    push();
+    fill("#ef4766")
+    stroke("#AFFF");
+    ellipse(sheep.shape.x - 10, sheep.shape.y, 10);
+    pop();
+    //sheep nose
+    push();
+    fill("#000000")
+    noStroke();
+    ellipse(sheep.shape.x, sheep.shape.y + 6, 3);
     pop();
 
 }
@@ -102,7 +146,7 @@ function drawSheepTrust() {
 function drawWolf() {
 
 
-    //wolfappearance
+    //wolf appearance
     push();
     fill("#647275");
     noStroke();
@@ -117,10 +161,10 @@ function drawWolf() {
 
 };
 
-
+// Wehn the wolf overlaps the sheep, the sheep will be attcked and turn red!
 function wolfInteract() {
     const distance = dist(sheep.shape.x, sheep.shape.y, wolf.shape.x, wolf.shape.y);
-    const wolfOverlapsSheep = (distance < wolf.shape.size / 2);
+    const wolfOverlapsSheep = (distance < sheep.shape.size / 4);
     if (wolfOverlapsSheep) {
         sheep.fill = sheep.fills.dead;
         sheep.following = false;
@@ -133,18 +177,9 @@ function moveSheep() {
     if (!sheep.following) {
         return;
     }
-    sheep.shape.x = mouseX;
-    sheep.shape.y = mouseY;
+    sheep.shape.x = mouseX + 15;
+    sheep.shape.y = mouseY + 15;
 }
 
 
-
-
-// make the sheep jump when the mouse is clicked
-//function sheepJump() {
-//if (mouseIsPressed) {
-//  sheep.shape.y = (mouseY + 5)
-// };
-//      else { sheep.shape.y = mouseY }
-//}
 
