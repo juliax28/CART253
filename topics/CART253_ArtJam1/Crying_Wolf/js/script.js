@@ -16,10 +16,12 @@ let sheep =
         y: undefined,
         size: 50
     },
+    fill: "FFFFF",
+
     fills:
     {
         alive: "#FFFFFF",
-        dead: "#FF4433",
+        dead: "#CF352B",
     },
     trust: 0,
     following: true,
@@ -66,7 +68,7 @@ function draw() {
 //draw the sheep
 function drawSheep() {
     push();
-    fill(sheep.fills.alive);
+    fill(sheep.fill);
     noStroke();
     ellipse(sheep.shape.x + 15, sheep.shape.y + 15, sheep.shape.size);
     pop();
@@ -105,7 +107,7 @@ function wolfInteract() {
     const distance = dist(sheep.shape.x, sheep.shape.y, wolf.shape.x, wolf.shape.y);
     const wolfOverlapsSheep = (distance < wolf.shape.size / 2);
     if (wolfOverlapsSheep) {
-        sheep.fills = sheep.fills.dead;
+        sheep.fill = sheep.fills.dead;
         sheep.following = false;
     }
 
