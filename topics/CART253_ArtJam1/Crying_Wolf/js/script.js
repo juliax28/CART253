@@ -95,7 +95,7 @@ function drawWolf() {
     pop();
     //motion on the wolf
     wolf.shape.x = wolf.shape.x - 1;
-    wolf.shape.y = wolf.shape.x + 1;
+    wolf.shape.y = wolf.shape.y + 1;
 
 
 
