@@ -29,7 +29,7 @@ let sheep =
 
 
 };
-
+//wolf attributes
 let wolf =
 {
     shape:
@@ -44,8 +44,8 @@ let wolf =
         y: 2,
     },
 };
-//timer
-//let timer = 0;
+//timer, this will dictate when the wolf is drawn and also how fast night falls
+let timer = 0;
 
 
 /**
@@ -56,15 +56,26 @@ function setup() {
 }
 //draw background
 function draw() {
-    background("#B6E853");
+    //Background mapped to the timer
+    timer += 1;
+    const shade = map(timer, 0, 500, 255, 0);
+
+    background(shade);
+
+    if (timer > 500) {
+        drawWolf();
+    }
+
     //sheep
     moveSheep();
     drawSheep();
     drawSheepTrust();
     //wolf
-    drawWolf();
+
     //wolf attributes
     wolfInteract();
+
+
 
 }
 
