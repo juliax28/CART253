@@ -1,21 +1,57 @@
 # Template p5 Project
 
-Author Name
+Julia Axiuk
+
+Exercise code link: https://github.com/juliax28/CART253/tree/b787e0dc56d28b807660f46f73ca0250409c2d0b/topics/CART253_ArtJam1
+
 
 [View this project online](URL_FOR_THE_RUNNING_PROJECT)
 
 ## Description
 
-This description should help the reader understand what the program is, what any controls do, and perhaps what the desired experience it.
+A simple simulation of the 'crying wolf' exppression. Clicking on the sheep you're leading around with the mouse will startle it (this is shown as it flinches with a little blink), causing it's trust threshold to go up.  Click too many times and the sheep will no longer trust you, causing it to stop heeding your guidance! But be careful, if this happens the chances of being eaten by the wolf when night falls are much higher. If the sheep trusts you because you didn't scare it, though, you can easily save your sheep and avoid the wolf!
+
+Being touched by the wolf at nigght will cause your sheep to turn red and die.
 
 ## Credits
-
-This bit should describe what tools were used. For example:
-
 This project uses [p5.js](https://p5js.org).
+
+
 
 ## Attribution
 
-This bit should attribute any assets or other elements used taken from other sources. For example:
+Although I did alter the code slightly, I used a portion of code from an in-class discussion after I asked about mapping.
+The code that was sent to me via discord:
 
-The fish images were sourced from the [Creative Commons image "Georgia Aquarium Fish"](https://search.creativecommons.org/photos/96f6f770-eac1-488c-8abb-16bee7bcc874) by Mike Johnston which is licensed with CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.
+let timer = 0;
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  timer += 1;
+
+  const shade = map(timer, 0, 500, 255, 0);
+  
+  background(shade);
+  
+  if (timer > 500) {
+    ellipse(100, 100, 100);
+  }
+}
+
+
+The code I used:
+
+function draw() 
+    {
+    //Background mapped to the timer
+    timer += 1;
+    const shade = map(timer, 0, 500, 255, 0);
+
+    background(shade);
+    //as night falls, the wolf will appear
+    if (timer > 500) {
+        drawWolf();
+    }

@@ -2,7 +2,9 @@
  * Crying Wolf
  * Julia Axiuk
  * 
- * Click too many times and the sheep will no longer trust you, risking the chance of being eaten
+ * A simple simulation of the 'crying wolf' exppression. Clicking on the sheep you're leading around will startle it, causing it's trust threshold to go up. 
+ * Clikc too many times and the sheep will no longer trust you, causing it to stop heeding your guidance! But be careful, if this happens the chances of being eaten 
+ * by the wolf when night falls are much higher. If the sheep trusts you because you didn't scare it, though, you can easily save your sheep and avoid the wolf!
  */
 
 "use strict";
@@ -69,12 +71,12 @@ function draw() {
         drawWolf();
     }
 
-    //sheep
+    //sheep attributes
     moveSheep();
     drawSheep();
     drawSheepTrust();
 
-    //wolf attributes
+    //wolf Elements
     wolfInteract();
 
 
@@ -90,7 +92,7 @@ function drawSheep() {
     ellipse(sheep.shape.x, sheep.shape.y, sheep.shape.size);
     pop();
 
-    //Sheep fur "bubbles"
+    //Sheep ears
     //top right
     push();
     fill(sheep.fill);
@@ -134,12 +136,24 @@ function drawSheepTrust() {
         sheep.following = false;
     }
     //eyes blink when scared/trust is lost
+    if (!sheep.following) {
+        return;
+    }
     if (mouseIsPressed) {
+
         sheep.fills.eyeDefault = sheep.fills.eyeScared;
     }
     else {
         sheep.fills.eyeDefault = sheep.fills.eyeBlue;
     }
+}
+//sheep follows mouse
+function moveSheep() {
+    if (!sheep.following) {
+        return;
+    }
+    sheep.shape.x = mouseX + 15;
+    sheep.shape.y = mouseY + 15;
 }
 
 function drawWolf() {
@@ -151,6 +165,8 @@ function drawWolf() {
     noStroke();
     ellipse(wolf.shape.x, wolf.shape.y, wolf.shape.size);
     pop();
+
+
     //wolf ears
     //right ear
     push();
@@ -164,6 +180,8 @@ function drawWolf() {
     noStroke();
     rect(wolf.shape.x - 25, wolf.shape.y - 28, 20, 25);
     pop();
+
+
     // wolf Eyes
     //right eye
     push();
@@ -171,6 +189,7 @@ function drawWolf() {
     stroke("#FFFFFF");
     ellipse(wolf.shape.x + 10, wolf.shape.y, 10);
     pop();
+
     //Left eye
     push();
     fill("#EE3434");
@@ -193,25 +212,19 @@ function drawWolf() {
 
 };
 
-// Wehn the wolf overlaps the sheep, the sheep will be attcked and turn red!
+// When the wolf overlaps the sheep, the sheep will be attacked and turn red!
 function wolfInteract() {
     const distance = dist(sheep.shape.x, sheep.shape.y, wolf.shape.x, wolf.shape.y);
     const wolfOverlapsSheep = (distance < sheep.shape.size);
     if (wolfOverlapsSheep) {
+        //If the wolf touches the sheep, the sheep will turn red and stop interacting with the mouse
         sheep.fill = sheep.fills.dead;
         sheep.following = false;
     }
 
 
 }
-//sheep follows mouse
-function moveSheep() {
-    if (!sheep.following) {
-        return;
-    }
-    sheep.shape.x = mouseX + 15;
-    sheep.shape.y = mouseY + 15;
-}
+
 
 
 
