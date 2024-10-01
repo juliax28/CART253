@@ -13,7 +13,7 @@ Link to repository (just in case): https://github.com/juliax28/CART253.git
 
 A simple simulation of the 'crying wolf' exppression. Clicking on the sheep you're leading around with the mouse will startle it (this is shown as it flinches with a little blink), causing it's trust threshold to go up.  Click too many times and the sheep will no longer trust you, causing it to stop heeding your guidance! But be careful, if this happens the chances of being eaten by the wolf when night falls are much higher. If the sheep trusts you because you didn't scare it, though, you can easily save your sheep and avoid the wolf!
 
-Being touched by the wolf at nigght will cause your sheep to turn red and die.
+Being touched by the wolf at night will cause your sheep to turn red and die.
 
 ## Credits
 This project uses [p5.js](https://p5js.org).
