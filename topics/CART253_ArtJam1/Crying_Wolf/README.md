@@ -2,10 +2,12 @@
 
 Julia Axiuk
 
-Exercise code link: https://github.com/juliax28/CART253/tree/b787e0dc56d28b807660f46f73ca0250409c2d0b/topics/CART253_ArtJam1
+Exercise code link: https://github.com/juliax28/CART253/tree/257f5a7426a74da5862d03c771f314853a63a3f2/topics/CART253_ArtJam1
 
+Working Web Link: https://juliax28.github.io/CART253/topics/CART253_ArtJam1/Crying_Wolf/
 
-[View this project online](URL_FOR_THE_RUNNING_PROJECT)
+Link to repository (just in case): https://github.com/juliax28/CART253.git
+
 
 ## Description
 
