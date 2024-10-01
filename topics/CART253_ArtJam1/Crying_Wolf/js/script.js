@@ -22,6 +22,9 @@ let sheep =
     {
         alive: "#FFFFFF",
         dead: "#CF352B",
+        eyeDefault: "#8997FF",
+        eyeBlue: "#8997FF",
+        eyeScared: "EF4766",
     },
     trust: 0,
     following: true,
@@ -92,7 +95,7 @@ function drawSheep() {
     push();
     fill(sheep.fill);
     noStroke();
-    ellipse(sheep.shape.x + 15, sheep.shape.y - 20, 20);
+    ellipse(sheep.shape.x + 15, sheep.shape.y - 21, 20);
     pop();
     // top left
     push();
@@ -100,28 +103,17 @@ function drawSheep() {
     noStroke();
     ellipse(sheep.shape.x - 15, sheep.shape.y - 21, 20);
     pop();
-    //bottom left
-    push();
-    fill(sheep.fill);
-    noStroke();
-    ellipse(sheep.shape.x - 15, sheep.shape.y + 21, 15);
-    pop();
 
-    push();
-    fill(sheep.fill);
-    noStroke();
-    ellipse(sheep.shape.x - 16, sheep.shape.y + 22, 10);
-    pop();
 
     //sheep eye R
     push();
-    fill("#ef4766")
+    fill(sheep.fills.eyeDefault)
     stroke("#AFFF");
     ellipse(sheep.shape.x + 10, sheep.shape.y, 10);
     pop();
     //sheep eye L
     push();
-    fill("#ef4766")
+    fill(sheep.fills.eyeDefault)
     stroke("#AFFF");
     ellipse(sheep.shape.x - 10, sheep.shape.y, 10);
     pop();
@@ -141,8 +133,15 @@ function drawSheepTrust() {
         //sheep stops following
         sheep.following = false;
     }
-
+    //eyes blink when scared/trust is lost
+    if (mouseIsPressed) {
+        sheep.fills.eyeDefault = sheep.fills.eyeScared;
+    }
+    else {
+        sheep.fills.eyeDefault = sheep.fills.eyeBlue;
+    }
 }
+
 function drawWolf() {
 
 
@@ -151,6 +150,39 @@ function drawWolf() {
     fill("#647275");
     noStroke();
     ellipse(wolf.shape.x, wolf.shape.y, wolf.shape.size);
+    pop();
+    //wolf ears
+    //right ear
+    push();
+    fill("#647275");
+    noStroke();
+    rect(wolf.shape.x + 5, wolf.shape.y - 28, 20, 25);
+    pop();
+    //Left Ear
+    push();
+    fill("#647275");
+    noStroke();
+    rect(wolf.shape.x - 25, wolf.shape.y - 28, 20, 25);
+    pop();
+    // wolf Eyes
+    //right eye
+    push();
+    fill("#EE3434");
+    stroke("#FFFFFF");
+    ellipse(wolf.shape.x + 10, wolf.shape.y, 10);
+    pop();
+    //Left eye
+    push();
+    fill("#EE3434");
+    stroke("#FFFFFF");
+    ellipse(wolf.shape.x - 10, wolf.shape.y, 10);
+    pop();
+
+    //nose
+    push();
+    fill("#000000");
+    noStroke();
+    ellipse(wolf.shape.x, wolf.shape.y + 12, 10);
     pop();
     //motion on the wolf
     wolf.shape.x = wolf.shape.x - wolf.velocity.x;
@@ -164,7 +196,7 @@ function drawWolf() {
 // Wehn the wolf overlaps the sheep, the sheep will be attcked and turn red!
 function wolfInteract() {
     const distance = dist(sheep.shape.x, sheep.shape.y, wolf.shape.x, wolf.shape.y);
-    const wolfOverlapsSheep = (distance < sheep.shape.size / 4);
+    const wolfOverlapsSheep = (distance < sheep.shape.size);
     if (wolfOverlapsSheep) {
         sheep.fill = sheep.fills.dead;
         sheep.following = false;
