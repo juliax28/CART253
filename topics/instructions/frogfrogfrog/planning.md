@@ -104,3 +104,24 @@ Events
     - If the tongue is still inside the frog's mouth
         - Launch the tongue
 
+
+ADDING A SCORE
+Idea: Add a score
+- REMEMBER: Doesn't have to be the first thing you think of!
+- doesn't need to just be a number that goes up by one each time you catch a fly
+Alternatie idea:
+- A counter that goes down when a fly escapes
+- Amny other possibilities!
+PLan: 
+- Everytime you catch a fly the number goes up by 01
+- Show the score on the screen as a number (top right corner)
+
+
+Pseudocode:
+- Score = 0
+
+- if (the frog catches a fly/ the tongue overlaps the fly, score = score + 1)
+- 
+
+-   drawScore()
+        Draw the score at the top right corner

@@ -43,6 +43,10 @@ const fly = {
     speed: 3
 };
 
+//score variabel
+let score= 0;
+
+
 /**
  * Creates the canvas and initializes the fly
  */
@@ -61,6 +65,7 @@ function draw() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    drawScore();
 }
 
 /**
@@ -86,6 +91,16 @@ function drawFly() {
     ellipse(fly.x, fly.y, fly.size);
     pop();
 }
+
+//draw score in top right corner
+function drawScore(){
+    push();
+    textAlign(RIGHT, TOP);
+    text(score, width, 0);
+    pop();
+
+}
+
 
 /**
  * Resets the fly to the left with a random y
@@ -165,6 +180,8 @@ function checkTongueFlyOverlap() {
     // Check if it's an overlap
     const eaten = (d < frog.tongue.size/2 + fly.size/2);
     if (eaten) {
+        // increse the score
+        score = score +1;
         // Reset the fly
         resetFly();
         // Bring back the tongue
