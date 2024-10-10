@@ -45,7 +45,8 @@ const fly = {
 
 //score variabel
 let score= 0;
-
+// the current State
+let state = "title"; // Can be "Tie" or "Game"
 
 /**
  * Creates the canvas and initializes the fly
@@ -58,6 +59,23 @@ function setup() {
 }
 
 function draw() {
+    if (state === "title"){
+        title();
+        
+    }
+    else if (state === "game")
+    game();
+
+}
+
+function title() {
+    background ("pink");
+    text("FrogFrogFrog", 100, 100);
+
+}
+
+function game () {
+
     background("#87ceeb");
     moveFly();
     drawFly();
@@ -67,7 +85,6 @@ function draw() {
     checkTongueFlyOverlap();
     drawScore();
 }
-
 /**
  * Moves the fly according to its speed
  * Resets the fly if it gets all the way to the right
@@ -193,7 +210,12 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
+    if (state === "title"){
+        state = "game";
+    }
+    else if (state === "game"){
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
+    }
     }
 }
