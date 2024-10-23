@@ -1,72 +1,68 @@
-# Pseudocode for Frogfrogfrog
+# Pseudocode for CandyCat
 
-```
-frog
-    body
-        x: 320 // Halfway across a 640x480 canvas
-        y: 480 // Bottom of a 640x480 canvas
-        size: 100 // Diameter of the frog circle
-    tongue
-        x: undefined // Will always match the body
-        y: 480 // At the bottom (important to draw it BEHIND the frog)
-        size: 20 // The tip of the tongue
-        speed: 20 // Speed the tongue movies in pixels/second
-        state: idle // At the start the tongue hasn't been launched
 
-fly
-    x: 0 // The left
-    y: 200? // This will be a random position...
-    size: 10 // Small?
-    speed: 3 // How fast it moves across the screen
+WHAT I NEED:
+Opening state with the witch leaving image
+Change the frog to a cat
+Change flies to candy
+Have three diff types of candy
+Make cat interact with candy
+Have a timer that counts down, eventually leading to witch being back (play sound + countdown)
+Which in turn triggers the win or lose screens depending on the states of candy eaten + cat weight
+Win if: right ratio of candy to weight basically
 
-setup()
-    Create a 640x480 canvas
 
-draw()
-    Draw the background // Probably just blue or something
-    moveFly()
-    drawFly()
-    moveFrog()
-    moveTongue()
-    drawFrog()
-    checkTongueFlyOverlap()
+REMEMBER- ESTABLISH ALL THE VARIABLES
 
-moveFly()
-    add fly speed to fly x
-    if (fly x is past the right side of the canvas)
-        move the fly back to the left
-        give the fly a random y position
+WE GOT
 
-drawFly()
-    Draw a black circle at the fly's position with its size
+blueCandy {
+    size height
+    size width
+    speed
+    point number
+    (repeat for red candy but make points in the negatives)
+}
 
-moveFrog()
-    Set the frog's x to the mouse x
+Timer = 
 
-moveTongue()
-    Set tongue x to frog x
-    if (tongue state is idle)
-        Do nothing
-    else if (tongue state is outbound)
-        move the tongue up by its speed
-        if (tongue hit the top)
-            set the tongue state to inbound
-    else if (tongue state is inbound)
-        move the tongue down by its speed
-        if (tongue hit the bottom)
-            set the tongue state to idle
 
-drawFrog()
-    Draw a red circle at the tongue position with its size
-    Draw a red line from the tongue position to the frog position
-    Draw a green circle at the frog position with its size
 
-checkTongueFlyOverlap()
-    if (tongue circle overlaps the fly)
-        Move the fly back to the left at a random y
-        set the tongue state to inbound
+gameStart = state one
+state one {
+display start image
+}
 
-mousePressed()
-    if (tongue state is idle)
-        set tongue state to outbound
-```
+if mouse clicked then state = GameState
+
+GameState{
+
+EVEYRTHING TO DO WITH THE GAME BUT...
+//hange flies to candy and add extra
+
+{
+
+function moveBlueCandy() {
+    // Move the blueCandy
+    blueCandy.x += BlueCandy.speed;
+    // Handle the Candy going off the canvas
+    if (blueCandy.x > width) {
+        resetblue Candy();
+    }
+}
+REPEAT WITH
+
+/**
+ * Draws the fly as a black circle
+ */
+function drawFly() {
+    push();
+    noStroke();
+    fill("#000000");
+    ellipse(fly.x, fly.y, fly.size);
+    pop();
+}
+Obviously chnage this to whatever I want the candy to look likeb and replace all 'flies' with either Red or Blue candy
+
+}
+}
