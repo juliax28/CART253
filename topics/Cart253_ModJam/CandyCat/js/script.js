@@ -18,16 +18,16 @@ const cat = {
     // The cat's body has a position and size
     body: {
         x: 320,
-        y: 520,
+        y: 480,
         size: 150
     },
-    // The cat's tongue has a position, size, speed, and state
-    tongue: {
+    // The cat's paw has a position, size, speed, and state
+    paw: {
         x: undefined,
         y: 480,
-        size: 20,
+        size: 40,
         speed: 20,
-        // Determines how the tongue moves each frame
+        // Determines how the paw moves each frame
         state: "idle" // State can be: idle, outbound, inbound
     }
 };
@@ -41,7 +41,7 @@ const blueCandy = {
     speed: 3
 };
 
-const redCandy = {
+const OrangeCandy = {
     x: 0,
     y: 200, // Will be random
     size: 15,
@@ -50,6 +50,7 @@ const redCandy = {
 
 //score variabel
 let score = 0;
+//timer
 // the current State
 let state = "title"; // Can be "Tie" or "Game"
 
@@ -61,7 +62,7 @@ function setup() {
 
     // Give the fly its first random position
     resetBlueCandy();
-    resetRedCandy();
+    resetOrangeCandy();
 }
 
 function draw() {
@@ -75,23 +76,23 @@ function draw() {
 }
 
 function title() {
-    background("pink");
+    background("#6f217d");
     text("Candy Cat", 100, 100);
 
 }
 
 function game() {
 
-    background("#87ceeb");
+    background("#6f217d");
     moveBlueCandy();
     drawBlueCandy();
-    moveRedCandy();
-    drawRedCandy();
+    moveOrangeCandy();
+    drawOrangeCandy();
     movecat();
-    moveTongue();
+    movepaw();
     drawcat();
-    checkTongueFlyBlueCandyOverlap();
-    checkTongueFlyRedCandyOverlap();
+    checkpawFlyBlueCandyOverlap();
+    checkpawFlyOrangeCandyOverlap();
     drawScore();
 }
 /**
@@ -106,17 +107,17 @@ function moveBlueCandy() {
         resetBlueCandy();
     }
 }
-function moveRedCandy() {
+function moveOrangeCandy() {
     // Move the Blue Candy
-    redCandy.x += redCandy.speed;
+    OrangeCandy.x += OrangeCandy.speed;
     // Handle the fly going off the canvas
-    if (redCandy.x > width) {
-        resetRedCandy();
+    if (OrangeCandy.x > width) {
+        resetOrangeCandy();
     }
 }
 
 /**
- * Draws the candy as a blue or red circle
+ * Draws the candy as a blue or Orange circle
  */
 function drawBlueCandy() {
     push();
@@ -125,11 +126,11 @@ function drawBlueCandy() {
     ellipse(blueCandy.x, blueCandy.y, blueCandy.size);
     pop();
 }
-function drawRedCandy() {
+function drawOrangeCandy() {
     push();
     noStroke();
-    fill("#fd4040");
-    ellipse(redCandy.x, redCandy.y, redCandy.size);
+    fill("#ffa94e");
+    ellipse(OrangeCandy.x, OrangeCandy.y, OrangeCandy.size);
     pop();
 }
 
@@ -150,9 +151,9 @@ function resetBlueCandy() {
     blueCandy.x = 0;
     blueCandy.y = random(0, 300);
 }
-function resetRedCandy() {
-    redCandy.x = 0;
-    redCandy.y = random(0, 300);
+function resetOrangeCandy() {
+    OrangeCandy.x = 0;
+    OrangeCandy.y = random(0, 300);
 }
 /**
  * Moves the cat to the mouse position on x
@@ -162,49 +163,50 @@ function movecat() {
 }
 
 /**
- * Handles moving the tongue based on its state
+ * Handles moving the paw based on its state
  */
-function moveTongue() {
-    // Tongue matches the cat's x
-    cat.tongue.x = cat.body.x;
-    // If the tongue is idle, it doesn't do anything
-    if (cat.tongue.state === "idle") {
+function movepaw() {
+    // paw matches the cat's x
+    cat.paw.x = cat.body.x;
+    // If the paw is idle, it doesn't do anything
+    if (cat.paw.state === "idle") {
         // Do nothing
     }
-    // If the tongue is outbound, it moves up
-    else if (cat.tongue.state === "outbound") {
-        cat.tongue.y += -cat.tongue.speed;
-        // The tongue bounces back if it hits the top
-        if (cat.tongue.y <= 0) {
-            cat.tongue.state = "inbound";
+    // If the paw is outbound, it moves up
+    else if (cat.paw.state === "outbound") {
+        cat.paw.y += -cat.paw.speed;
+        // The paw bounces back if it hits the top
+        if (cat.paw.y <= 0) {
+            cat.paw.state = "inbound";
         }
     }
-    // If the tongue is inbound, it moves down
-    else if (cat.tongue.state === "inbound") {
-        cat.tongue.y += cat.tongue.speed;
-        // The tongue stops if it hits the bottom
-        if (cat.tongue.y >= height) {
-            cat.tongue.state = "idle";
+    // If the paw is inbound, it moves down
+    else if (cat.paw.state === "inbound") {
+        cat.paw.y += cat.paw.speed;
+        // The paw stops if it hits the bottom
+        if (cat.paw.y >= height) {
+            cat.paw.state = "idle";
         }
     }
 }
 
 /**
- * Displays the tongue (tip and line connection) and the cat (body)
+ * Displays the paw (tip and line connection) and the cat (body)
  */
 function drawcat() {
-    // Draw the tongue tip
+
+
+    // Draw the rest of the paw
+    push();
+    stroke("#222222");
+    strokeWeight(cat.paw.size);
+    line(cat.paw.x + 50, cat.paw.y, cat.body.x + 50, cat.body.y);
+    pop();
+    // Draw the paw tip
     push();
     fill("#ffffff");
     noStroke();
-    ellipse(cat.body.x + 30, cat.tongue.y, cat.tongue.size);
-    pop();
-
-    // Draw the rest of the tongue
-    push();
-    stroke("#222222");
-    strokeWeight(cat.tongue.size);
-    line(cat.tongue.x + 30, cat.tongue.y, cat.body.x + 30, cat.body.y);
+    ellipse(cat.body.x + 50, cat.paw.y, cat.paw.size);
     pop();
 
     // Draw the cat's body
@@ -216,13 +218,13 @@ function drawcat() {
 }
 
 /**
- * Handles the tongue overlapping the fly
+ * Handles the paw overlapping the fly
  */
-function checkTongueFlyBlueCandyOverlap() {
-    // Get distance from tongue to fly
-    const d = dist(cat.tongue.x, cat.tongue.y, blueCandy.x, blueCandy.y);
+function checkpawFlyBlueCandyOverlap() {
+    // Get distance from paw to fly
+    const d = dist(cat.paw.x + 50, cat.paw.y, blueCandy.x, blueCandy.y);
     // Check if it's an overlap
-    const eaten = (d < cat.tongue.size / 2 + blueCandy.size / 2);
+    const eaten = (d < cat.paw.size / 2 + blueCandy.size / 2);
     if (eaten) {
         // increse the score
         score = score + 1;
@@ -230,37 +232,37 @@ function checkTongueFlyBlueCandyOverlap() {
         cat.body.size = cat.body.size + 10;
         // Reset the fly
         resetBlueCandy();
-        // Bring back the tongue
-        cat.tongue.state = "inbound";
+        // Bring back the paw
+        cat.paw.state = "inbound";
     }
 }
-function checkTongueFlyRedCandyOverlap() {
-    // Get distance from tongue to fly
-    const d = dist(cat.tongue.x, cat.tongue.y, redCandy.x, redCandy.y);
+function checkpawFlyOrangeCandyOverlap() {
+    // Get distance from paw to fly
+    const d = dist(cat.paw.x, cat.paw.y + 50, OrangeCandy.x, OrangeCandy.y);
     // Check if it's an overlap
-    const eaten = (d < cat.tongue.size / 2 + redCandy.size / 2);
+    const eaten = (d < cat.paw.size / 2 + OrangeCandy.size / 2);
     if (eaten) {
         // increse the score
         score = score + 5;
         //increase cat size
         cat.body.size = cat.body.size + 20;
         // Reset the fly
-        resetRedCandy();
-        // Bring back the tongue
-        cat.tongue.state = "inbound";
+        resetOrangeCandy();
+        // Bring back the paw
+        cat.paw.state = "inbound";
     }
 }
 
 /**
- * Launch the tongue on click (if it's not launched yet)
+ * Launch the paw on click (if it's not launched yet)
  */
 function mousePressed() {
     if (state === "title") {
         state = "game";
     }
     else if (state === "game") {
-        if (cat.tongue.state === "idle") {
-            cat.tongue.state = "outbound";
+        if (cat.paw.state === "idle") {
+            cat.paw.state = "outbound";
         }
     }
 }
