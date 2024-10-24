@@ -1,13 +1,11 @@
 /**
- * Frogfrogfrog
- * Pippin Barr
+ * CandyCat
+ * Pippin Barr/Modified by Julia Axiuk
  * 
- * A game of catching flies with your frog-tongue
+ * A game of catching candy and finding balance to not get caught
  * 
  * Instructions:
- * - Move the frog with your mouse
- * - Click to launch the tongue
- * - Catch flies
+ *
  * 
  * Made with p5
  * https://p5js.org/
@@ -15,15 +13,15 @@
 
 "use strict";
 
-// Our frog
-const frog = {
-    // The frog's body has a position and size
+// Our cat
+const cat = {
+    // The cat's body has a position and size
     body: {
         x: 320,
         y: 520,
         size: 150
     },
-    // The frog's tongue has a position, size, speed, and state
+    // The cat's tongue has a position, size, speed, and state
     tongue: {
         x: undefined,
         y: 480,
@@ -34,14 +32,26 @@ const frog = {
     }
 };
 
-// Our fly
+// Candy
 // Has a position, size, and speed of horizontal movement
-const fly = {
+const blueCandy = {
     x: 0,
     y: 200, // Will be random
     size: 10,
     speed: 3
 };
+
+const redCandy = {
+    x: 0,
+    y: 200, // Will be random
+    size: 15,
+    speed: 8
+};
+
+//score variabel
+let score = 0;
+// the current State
+let state = "title"; // Can be "Tie" or "Game"
 
 /**
  * Creates the canvas and initializes the fly
@@ -50,125 +60,194 @@ function setup() {
     createCanvas(640, 480);
 
     // Give the fly its first random position
-    resetFly();
+    resetBlueCandy();
+    resetRedCandy();
 }
 
 function draw() {
-    background("#87ceeb");
-    moveFly();
-    drawFly();
-    moveFrog();
-    moveTongue();
-    drawFrog();
-    checkTongueFlyOverlap();
+    if (state === "title") {
+        title();
+
+    }
+    else if (state === "game")
+        game();
+
 }
 
+function title() {
+    background("pink");
+    text("Candy Cat", 100, 100);
+
+}
+
+function game() {
+
+    background("#87ceeb");
+    moveBlueCandy();
+    drawBlueCandy();
+    moveRedCandy();
+    drawRedCandy();
+    movecat();
+    moveTongue();
+    drawcat();
+    checkTongueFlyBlueCandyOverlap();
+    checkTongueFlyRedCandyOverlap();
+    drawScore();
+}
 /**
- * Moves the fly according to its speed
- * Resets the fly if it gets all the way to the right
+ * Moves the candy according to its speed
+ * Resets the candy if it gets all the way to the right
  */
-function moveFly() {
-    // Move the fly
-    fly.x += fly.speed;
+function moveBlueCandy() {
+    // Move the Blue Candy
+    blueCandy.x += blueCandy.speed;
     // Handle the fly going off the canvas
-    if (fly.x > width) {
-        resetFly();
+    if (blueCandy.x > width) {
+        resetBlueCandy();
+    }
+}
+function moveRedCandy() {
+    // Move the Blue Candy
+    redCandy.x += redCandy.speed;
+    // Handle the fly going off the canvas
+    if (redCandy.x > width) {
+        resetRedCandy();
     }
 }
 
 /**
- * Draws the fly as a black circle
+ * Draws the candy as a blue or red circle
  */
-function drawFly() {
+function drawBlueCandy() {
     push();
     noStroke();
-    fill("#000000");
-    ellipse(fly.x, fly.y, fly.size);
+    fill("#5db5ff");
+    ellipse(blueCandy.x, blueCandy.y, blueCandy.size);
     pop();
 }
+function drawRedCandy() {
+    push();
+    noStroke();
+    fill("#fd4040");
+    ellipse(redCandy.x, redCandy.y, redCandy.size);
+    pop();
+}
+
+//draw score in top right corner
+function drawScore() {
+    push();
+    textAlign(RIGHT, TOP);
+    text(score, width, 0);
+    pop();
+
+}
+
 
 /**
  * Resets the fly to the left with a random y
  */
-function resetFly() {
-    fly.x = 0;
-    fly.y = random(0, 300);
+function resetBlueCandy() {
+    blueCandy.x = 0;
+    blueCandy.y = random(0, 300);
 }
-
+function resetRedCandy() {
+    redCandy.x = 0;
+    redCandy.y = random(0, 300);
+}
 /**
- * Moves the frog to the mouse position on x
+ * Moves the cat to the mouse position on x
  */
-function moveFrog() {
-    frog.body.x = mouseX;
+function movecat() {
+    cat.body.x = mouseX;
 }
 
 /**
  * Handles moving the tongue based on its state
  */
 function moveTongue() {
-    // Tongue matches the frog's x
-    frog.tongue.x = frog.body.x;
+    // Tongue matches the cat's x
+    cat.tongue.x = cat.body.x;
     // If the tongue is idle, it doesn't do anything
-    if (frog.tongue.state === "idle") {
+    if (cat.tongue.state === "idle") {
         // Do nothing
     }
     // If the tongue is outbound, it moves up
-    else if (frog.tongue.state === "outbound") {
-        frog.tongue.y += -frog.tongue.speed;
+    else if (cat.tongue.state === "outbound") {
+        cat.tongue.y += -cat.tongue.speed;
         // The tongue bounces back if it hits the top
-        if (frog.tongue.y <= 0) {
-            frog.tongue.state = "inbound";
+        if (cat.tongue.y <= 0) {
+            cat.tongue.state = "inbound";
         }
     }
     // If the tongue is inbound, it moves down
-    else if (frog.tongue.state === "inbound") {
-        frog.tongue.y += frog.tongue.speed;
+    else if (cat.tongue.state === "inbound") {
+        cat.tongue.y += cat.tongue.speed;
         // The tongue stops if it hits the bottom
-        if (frog.tongue.y >= height) {
-            frog.tongue.state = "idle";
+        if (cat.tongue.y >= height) {
+            cat.tongue.state = "idle";
         }
     }
 }
 
 /**
- * Displays the tongue (tip and line connection) and the frog (body)
+ * Displays the tongue (tip and line connection) and the cat (body)
  */
-function drawFrog() {
+function drawcat() {
     // Draw the tongue tip
     push();
-    fill("#ff0000");
+    fill("#ffffff");
     noStroke();
-    ellipse(frog.tongue.x, frog.tongue.y, frog.tongue.size);
+    ellipse(cat.body.x + 30, cat.tongue.y, cat.tongue.size);
     pop();
 
     // Draw the rest of the tongue
     push();
-    stroke("#ff0000");
-    strokeWeight(frog.tongue.size);
-    line(frog.tongue.x, frog.tongue.y, frog.body.x, frog.body.y);
+    stroke("#222222");
+    strokeWeight(cat.tongue.size);
+    line(cat.tongue.x + 30, cat.tongue.y, cat.body.x + 30, cat.body.y);
     pop();
 
-    // Draw the frog's body
+    // Draw the cat's body
     push();
-    fill("#00ff00");
+    fill("#222222");
     noStroke();
-    ellipse(frog.body.x, frog.body.y, frog.body.size);
+    ellipse(cat.body.x, cat.body.y, cat.body.size);
     pop();
 }
 
 /**
  * Handles the tongue overlapping the fly
  */
-function checkTongueFlyOverlap() {
+function checkTongueFlyBlueCandyOverlap() {
     // Get distance from tongue to fly
-    const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
+    const d = dist(cat.tongue.x, cat.tongue.y, blueCandy.x, blueCandy.y);
     // Check if it's an overlap
-    const eaten = (d < frog.tongue.size/2 + fly.size/2);
+    const eaten = (d < cat.tongue.size / 2 + blueCandy.size / 2);
     if (eaten) {
+        // increse the score
+        score = score + 1;
+        //increase cat size
+        cat.body.size = cat.body.size + 10;
         // Reset the fly
-        resetFly();
+        resetBlueCandy();
         // Bring back the tongue
-        frog.tongue.state = "inbound";
+        cat.tongue.state = "inbound";
+    }
+}
+function checkTongueFlyRedCandyOverlap() {
+    // Get distance from tongue to fly
+    const d = dist(cat.tongue.x, cat.tongue.y, redCandy.x, redCandy.y);
+    // Check if it's an overlap
+    const eaten = (d < cat.tongue.size / 2 + redCandy.size / 2);
+    if (eaten) {
+        // increse the score
+        score = score + 5;
+        //increase cat size
+        cat.body.size = cat.body.size + 20;
+        // Reset the fly
+        resetRedCandy();
+        // Bring back the tongue
+        cat.tongue.state = "inbound";
     }
 }
 
@@ -176,7 +255,12 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
-    if (frog.tongue.state === "idle") {
-        frog.tongue.state = "outbound";
+    if (state === "title") {
+        state = "game";
+    }
+    else if (state === "game") {
+        if (cat.tongue.state === "idle") {
+            cat.tongue.state = "outbound";
+        }
     }
 }
