@@ -51,7 +51,11 @@ const OrangeCandy = {
 //score variabel
 let score = 0;
 //timer
-timer = 60;
+let timer = {
+    counter: 5,
+    max: 5,
+    min: 0,
+};
 // the current State
 let state = "title"; // Can be "Tie" or "Game"
 
@@ -89,13 +93,13 @@ function title() {
 
 }
 function gameOverHunger(){
-    background();
-    text ("Game Over, Too Slow and still hungry!")
+    background("#6f217d");
+    text ("Game Over, Too Slow and still hungry!", 100,100)
 
 }
 function game() {
 
-    background("#6f217d");
+    background("#ff9043");
     moveBlueCandy();
     drawBlueCandy();
     moveOrangeCandy();
@@ -107,6 +111,8 @@ function game() {
     checkpawFlyOrangeCandyOverlap();
     drawScore();
     checkTimer();
+    drawTimer();
+    countDown();
 }
 /**
  * Moves the candy according to its speed
@@ -282,13 +288,27 @@ function mousePressed() {
 
 //Functions that check for the timer ending and which losing screen to give
 
+//Show the timer on the screen
+
+function countDown(){
+    timer.counter -= 1/(frameRate());
+}
+
 function drawTimer(){
-    timer = timer - 1;
     push();
     textAlign(CENTER, TOP);
-    text(score, width, 0);
+    textSize(100);
+    text(floor(timer.counter), 100,100);
     pop();
 }
+//When the timer reaches 0, this will choos wich reasult will happen
 function checkTimer() {
-
+if (timer.counter <= 0){
+    if (cat.body.size >= 250){
+        state = "GameOverFat";
+    }
+    if (score <= 20){
+        state = "gameOverHunger";
+    }
+}
 }
