@@ -52,8 +52,8 @@ const OrangeCandy = {
 let score = 0;
 //timer
 let timer = {
-    counter: 5,
-    max: 5,
+    counter: 30,
+    max: 30,
     min: 0,
 };
 // the current State
@@ -84,6 +84,9 @@ function draw() {
     if (state === "GameOverFat"){
         GameOverFat();
     }
+    if (state === "gameoverWin"){
+        gameOverWin();
+    }
 
 }
 
@@ -95,6 +98,16 @@ function title() {
 function gameOverHunger(){
     background("#6f217d");
     text ("Game Over, Too Slow and still hungry!", 100,100)
+
+}
+function gameOverWin(){
+    background("#99f977");
+    text ("WIN", 100,100)
+
+}
+function GameOverFat(){
+    background("#6f217d");
+    text ("You were too fat and sluggish", 100,100)
 
 }
 function game() {
@@ -284,6 +297,9 @@ function mousePressed() {
             cat.paw.state = "outbound";
         }
     }
+    if (state === "gameOverHunger" || state === "GameOverFat" || state === "gameOverWin"){
+        reset();
+    }
 }
 
 //Functions that check for the timer ending and which losing screen to give
@@ -307,8 +323,20 @@ if (timer.counter <= 0){
     if (cat.body.size >= 250){
         state = "GameOverFat";
     }
-    if (score <= 20){
+    if (score < 20){
         state = "gameOverHunger";
     }
+    if (cat.body.size < 250 && score >= 20) {
+        state = "gameOverWin"
+    }
+
+    }
 }
+
+function reset(){
+    state = "title";
+    score = 0;
+    timer.counter = 30;
+    cat.body.size = 150;
 }
+
