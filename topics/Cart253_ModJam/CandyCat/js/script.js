@@ -84,7 +84,7 @@ function draw() {
     if (state === "GameOverFat"){
         GameOverFat();
     }
-    if (state === "gameoverWin"){
+    if (state === "gameOverWin"){
         gameOverWin();
     }
 
@@ -326,7 +326,7 @@ if (timer.counter <= 0){
     if (score < 20){
         state = "gameOverHunger";
     }
-    if (cat.body.size < 250 && score >= 20) {
+    if (cat.body.size < 10000 && score >= 1) {
         state = "gameOverWin"
     }
 
