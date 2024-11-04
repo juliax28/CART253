@@ -78,13 +78,13 @@ function draw() {
     if (state === "game")
         game();
 
-    if (state === "gameOverHunger"){
+    if (state === "gameOverHunger") {
         gameOverHunger();
     }
-    if (state === "GameOverFat"){
+    if (state === "GameOverFat") {
         GameOverFat();
     }
-    if (state === "gameOverWin"){
+    if (state === "gameOverWin") {
         gameOverWin();
     }
 
@@ -95,19 +95,19 @@ function title() {
     text("Candy Cat", 100, 100);
 
 }
-function gameOverHunger(){
+function gameOverHunger() {
     background("#6f217d");
-    text ("Game Over, Too Slow and still hungry!", 100,100)
+    text("Game Over, Too Slow and still hungry!", 100, 100)
 
 }
-function gameOverWin(){
+function gameOverWin() {
     background("#99f977");
-    text ("WIN", 100,100)
+    text("WIN", 100, 100)
 
 }
-function GameOverFat(){
+function GameOverFat() {
     background("#6f217d");
-    text ("You were too fat and sluggish", 100,100)
+    text("You were too fat and sluggish", 100, 100)
 
 }
 function game() {
@@ -297,7 +297,7 @@ function mousePressed() {
             cat.paw.state = "outbound";
         }
     }
-    if (state === "gameOverHunger" || state === "GameOverFat" || state === "gameOverWin"){
+    if (state === "gameOverHunger" || state === "GameOverFat" || state === "gameOverWin") {
         reset();
     }
 }
@@ -306,34 +306,34 @@ function mousePressed() {
 
 //Show the timer on the screen
 
-function countDown(){
-    timer.counter -= 1/(frameRate());
+function countDown() {
+    timer.counter -= 1 / (frameRate());
 }
 
-function drawTimer(){
+function drawTimer() {
     push();
     textAlign(CENTER, TOP);
     textSize(100);
-    text(floor(timer.counter), 100,100);
+    text(floor(timer.counter), 100, 100);
     pop();
 }
 //When the timer reaches 0, this will choos wich reasult will happen
 function checkTimer() {
-if (timer.counter <= 0){
-    if (cat.body.size >= 250){
-        state = "GameOverFat";
-    }
-    if (score < 20){
-        state = "gameOverHunger";
-    }
-    if (cat.body.size < 10000 && score >= 1) {
-        state = "gameOverWin"
-    }
+    if (timer.counter <= 0) {
+        if (cat.body.size >= 250) {
+            state = "GameOverFat";
+        }
+        if (score < 20) {
+            state = "gameOverHunger";
+        }
+        if (cat.body.size < 350 && score >= 20) {
+            state = "gameOverWin"
+        }
 
     }
 }
 
-function reset(){
+function reset() {
     state = "title";
     score = 0;
     timer.counter = 30;
