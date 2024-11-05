@@ -23,7 +23,7 @@ const cat = {
     },
     // The cat's paw has a position, size, speed, and state
     paw: {
-        x: undefined,
+        x: undefined + 50,
         y: 480,
         size: 40,
         speed: 20,
@@ -45,7 +45,7 @@ const OrangeCandy = {
     x: 0,
     y: 200, // Will be random
     size: 15,
-    speed: 8
+    speed: 5
 };
 
 //score variabel
@@ -120,8 +120,8 @@ function game() {
     movecat();
     movepaw();
     drawcat();
-    checkpawFlyBlueCandyOverlap();
-    checkpawFlyOrangeCandyOverlap();
+    checkpawBlueCandyOverlap();
+    checkpawOrangeCandyOverlap();
     drawScore();
     checkTimer();
     drawTimer();
@@ -171,6 +171,7 @@ function drawScore() {
     push();
     textAlign(RIGHT, TOP);
     text(score, width, 0);
+    textSize(100);
     pop();
 
 }
@@ -232,13 +233,13 @@ function drawcat() {
     push();
     stroke("#222222");
     strokeWeight(cat.paw.size);
-    line(cat.paw.x + 50, cat.paw.y, cat.body.x + 50, cat.body.y);
+    line(cat.paw.x, cat.paw.y, cat.body.x + 50, cat.body.y);
     pop();
     // Draw the paw tip
     push();
     fill("#ffffff");
     noStroke();
-    ellipse(cat.body.x + 50, cat.paw.y, cat.paw.size);
+    ellipse(cat.body.x, cat.paw.y, cat.paw.size);
     pop();
 
     // Draw the cat's body
@@ -247,14 +248,16 @@ function drawcat() {
     noStroke();
     ellipse(cat.body.x, cat.body.y, cat.body.size);
     pop();
+    //draw the ears 
+
 }
 
 /**
  * Handles the paw overlapping the fly
  */
-function checkpawFlyBlueCandyOverlap() {
+function checkpawBlueCandyOverlap() {
     // Get distance from paw to fly
-    const d = dist(cat.paw.x + 50, cat.paw.y, blueCandy.x, blueCandy.y);
+    const d = dist(cat.paw.x, cat.paw.y, blueCandy.x, blueCandy.y);
     // Check if it's an overlap
     const eaten = (d < cat.paw.size / 2 + blueCandy.size / 2);
     if (eaten) {
@@ -268,9 +271,9 @@ function checkpawFlyBlueCandyOverlap() {
         cat.paw.state = "inbound";
     }
 }
-function checkpawFlyOrangeCandyOverlap() {
+function checkpawOrangeCandyOverlap() {
     // Get distance from paw to fly
-    const d = dist(cat.paw.x, cat.paw.y + 50, OrangeCandy.x, OrangeCandy.y);
+    const d = dist(cat.paw.x, cat.paw.y, OrangeCandy.x, OrangeCandy.y);
     // Check if it's an overlap
     const eaten = (d < cat.paw.size / 2 + OrangeCandy.size / 2);
     if (eaten) {
