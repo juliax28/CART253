@@ -93,21 +93,22 @@ function draw() {
 function title() {
     background("#6f217d");
     text("Candy Cat", 100, 100);
+    text("The witch has left, grab as much candy as you can before she comes back!", 100, 200);
 
 }
 function gameOverHunger() {
     background("#6f217d");
-    text("Game Over, Too Slow and still hungry!", 100, 100)
+    text("Game Over. You were too Slow and are still hungry!", 100, 100)
 
 }
 function gameOverWin() {
     background("#99f977");
-    text("WIN", 100, 100)
+    text("YOU WON! Life is all about balance.", 100, 100)
 
 }
 function GameOverFat() {
     background("#6f217d");
-    text("You were too fat and sluggish", 100, 100)
+    text("You were too fat and sluggish to hide from the witch. No treats for you for a week!", 100, 100)
 
 }
 function game() {
@@ -168,10 +169,11 @@ function drawOrangeCandy() {
 
 //draw score in top right corner
 function drawScore() {
+
     push();
     textAlign(RIGHT, TOP);
-    text(score, width, 0);
     textSize(100);
+    text(score, width, 0);
     pop();
 
 }
@@ -233,13 +235,13 @@ function drawcat() {
     push();
     stroke("#222222");
     strokeWeight(cat.paw.size);
-    line(cat.paw.x, cat.paw.y, cat.body.x + 50, cat.body.y);
+    line(cat.paw.x, cat.paw.y, cat.paw.x + 50, cat.body.y);
     pop();
     // Draw the paw tip
     push();
     fill("#ffffff");
     noStroke();
-    ellipse(cat.body.x, cat.paw.y, cat.paw.size);
+    ellipse(cat.paw.x, cat.paw.y, cat.paw.size);
     pop();
 
     // Draw the cat's body
@@ -248,7 +250,7 @@ function drawcat() {
     noStroke();
     ellipse(cat.body.x, cat.body.y, cat.body.size);
     pop();
-    //draw the ears 
+
 
 }
 
