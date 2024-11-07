@@ -5,7 +5,11 @@
  * A game of catching candy and finding balance to not get caught
  * 
  * Instructions:
- *
+ *Click to begin the game and click to launch your paw in order to catch the candy!
+ The different colored candies have different amount of points assigned, and you get fatter the more candy you eat!
+ But is this game about catching as much as you can being time runs out, or is it trying to teach you
+ a lesson? SPOILER! The only way to win is to find a good balance of candy to eat. There are three
+ possible outcomes.
  * 
  * Made with p5
  * https://p5js.org/
@@ -16,7 +20,7 @@
 // Our cat
 
 const cat = {
-    // The cat's body has a position and size
+    // The cat's body has a position, size and sprite
     body: {
         x: 320,
         y: 480,
@@ -68,7 +72,7 @@ const screenSprites = {
     winScreenSprite: undefined,
 }
 // the current State
-let state = "title"; // Can be "Tie" or "Game"
+let state = "title"; 
 
 //preload function for all images
 function preload() {
@@ -89,7 +93,7 @@ function setup() {
     resetBlueCandy();
     resetOrangeCandy();
 }
-
+//sets all the different possible states 
 function draw() {
     if (state === "title") {
         title();
@@ -109,7 +113,7 @@ function draw() {
     }
 
 }
-
+//Title State and image
 function title() {
     background("#6f217d");
     push();
@@ -118,6 +122,7 @@ function title() {
     pop();
 
 }
+//Defining all the Ending states and their assigned images
 function gameOverHunger() {
     background("#6f217d");
     push();
@@ -143,6 +148,7 @@ function GameOverFat() {
     pop();
 
 }
+//Functions that are run when in 'game' state
 function game() {
 
     background("#ff9043");
@@ -167,7 +173,7 @@ function game() {
 function moveBlueCandy() {
     // Move the Blue Candy
     blueCandy.x += blueCandy.speed;
-    // Handle the fly going off the canvas
+    // Handle the candy going off the canvas
     if (blueCandy.x > width) {
         resetBlueCandy();
     }
@@ -212,7 +218,7 @@ function drawScore() {
 
 
 /**
- * Resets the fly to the left with a random y
+ * Resets the candy to the left with a random y
  */
 function resetBlueCandy() {
     blueCandy.x = 0;
@@ -276,14 +282,8 @@ function drawcat() {
     ellipse(cat.paw.x, cat.paw.y, cat.paw.size);
     pop();
 
-    // Draw the cat's body
-    /*
-    push();
-    fill("#222222");
-    noStroke();
-    ellipse(cat.body.x, cat.body.y, cat.body.size);
-    pop();
-    */
+    // Draw the cat's body, it has a size, position and an associated sprite
+    
     push();
     imageMode(CENTER);
     image(cat.body.sprite, cat.body.x, cat.body.y, cat.body.size)
@@ -294,35 +294,35 @@ function drawcat() {
 }
 
 /**
- * Handles the paw overlapping the fly
+ * Handles the paw overlapping the candy
  */
 function checkpawBlueCandyOverlap() {
-    // Get distance from paw to fly
+    // Get distance from paw to  candy
     const d = dist(cat.paw.x, cat.paw.y, blueCandy.x, blueCandy.y);
     // Check if it's an overlap
     const eaten = (d < cat.paw.size / 2 + blueCandy.size / 2);
     if (eaten) {
-        // increse the score
+        // increase the score
         score = score + 1;
         //increase cat size
         cat.body.size = cat.body.size + 10;
-        // Reset the fly
+        // Reset the candy
         resetBlueCandy();
         // Bring back the paw
         cat.paw.state = "inbound";
     }
 }
 function checkpawOrangeCandyOverlap() {
-    // Get distance from paw to fly
+    // Get distance from paw to candy
     const d = dist(cat.paw.x, cat.paw.y, OrangeCandy.x, OrangeCandy.y);
     // Check if it's an overlap
     const eaten = (d < cat.paw.size / 2 + OrangeCandy.size / 2);
     if (eaten) {
-        // increse the score
+        // increase the score
         score = score + 5;
         //increase cat size
         cat.body.size = cat.body.size + 20;
-        // Reset the fly
+        // Reset the candy
         resetOrangeCandy();
         // Bring back the paw
         cat.paw.state = "inbound";
@@ -346,14 +346,14 @@ function mousePressed() {
     }
 }
 
-//Functions that check for the timer ending and which losing screen to give
 
-//Show the timer on the screen
 
+//Shows the timer on the screen
+// sets the counter
 function countDown() {
     timer.counter -= 1 / (frameRate());
 }
-
+// displays the timer
 function drawTimer() {
     push();
     textAlign(CENTER, TOP);
@@ -361,22 +361,25 @@ function drawTimer() {
     text(floor(timer.counter), 100, 100);
     pop();
 }
-//When the timer reaches 0, this will choos wich reasult will happen
+//When the timer reaches 0, this will choose which reasult will happen
 function checkTimer() {
     if (timer.counter <= 0) {
+        //if the cat is too fat...
         if (cat.body.size >= 250) {
             state = "GameOverFat";
         }
+        //if you didn't eat enough and are unsatisfied...
         if (score < 20) {
             state = "gameOverHunger";
         }
+        // you found the right balance!
         if (cat.body.size < 350 && score >= 20) {
             state = "gameOverWin"
         }
 
     }
 }
-
+//resets the game after recieving one of the possible endings on a clickm bringing the player back to the Title screen
 function reset() {
     state = "title";
     score = 0;
