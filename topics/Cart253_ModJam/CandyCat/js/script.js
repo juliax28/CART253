@@ -63,8 +63,8 @@ const medicineCandy = {
     y: 200, // Will be random
     size: 15,
     speed: 5,
-    fill:"#9bb26f",
-    points: -1,
+    fill:"#ea221b",
+    points: -5,
 }
 
 
@@ -168,12 +168,12 @@ function GameOverFat() {
 function game() {
 
     background("#ff9043");
-    //moveBlueCandy();
+    //moveBlueCandy
     moveCandy(blueCandy);
     drawCandy(blueCandy);
     checkPawCandyOverlap(blueCandy);
  
-    //moveOrangeCandy();
+    //moveOrangeCandy
     moveCandy(OrangeCandy);
     drawCandy(OrangeCandy);
     checkPawCandyOverlap(OrangeCandy);
@@ -365,15 +365,15 @@ function drawTimer() {
 function checkTimer() {
     if (timer.counter <= 0) {
         //if the cat is too fat...
-        if (cat.body.size >= 250) {
+        if (cat.body.size >= 300) {
             state = "GameOverFat";
         }
         //if you didn't eat enough and are unsatisfied...
-        if (score < 20) {
+        if (score < 50) {
             state = "gameOverHunger";
         }
         // you found the right balance!
-        if (cat.body.size < 250 && score >= 20) {
+        if (cat.body.size < 300 && score >= 50) {
             state = "gameOverWin"
         }
 
