@@ -129,7 +129,6 @@ function gameOverHunger() {
 }
 function gameOverWin() {
     background("#99f977");
-    text("YOU WON! Life is all about balance.", 100, 100)
     push();
     imageMode(CENTER);
     image(screenSprites.winScreenSprite, width / 2, height / 2);
