@@ -65,6 +65,7 @@ const screenSprites = {
     titleScreenSprite: undefined,
     fatScreenSprite: undefined,
     hungerScreenSprite: undefined,
+    winScreenSprite: undefined,
 }
 // the current State
 let state = "title"; // Can be "Tie" or "Game"
@@ -75,15 +76,16 @@ function preload() {
     screenSprites.titleScreenSprite = loadImage("assets/images/CC_Title.PNG")
     screenSprites.fatScreenSprite = loadImage("assets/images/CC_Fat.PNG")
     screenSprites.hungerScreenSprite = loadImage("assets/images/CC_Hungry.PNG")
+    screenSprites.winScreenSprite = loadImage("assets/images/CC_Win.PNG")
 }
 
 /**
- * Creates the canvas and initializes the fly
+ * Creates the canvas and initializes the candy
  */
 function setup() {
     createCanvas(640, 480);
 
-    // Give the fly its first random position
+    // Give the candy their first random positions
     resetBlueCandy();
     resetOrangeCandy();
 }
@@ -128,6 +130,10 @@ function gameOverHunger() {
 function gameOverWin() {
     background("#99f977");
     text("YOU WON! Life is all about balance.", 100, 100)
+    push();
+    imageMode(CENTER);
+    image(screenSprites.winScreenSprite, width / 2, height / 2);
+    pop();
 
 }
 function GameOverFat() {
