@@ -14,12 +14,14 @@
 "use strict";
 
 // Our cat
+
 const cat = {
     // The cat's body has a position and size
     body: {
         x: 320,
         y: 480,
-        size: 150
+        size: 150,
+        sprite: undefined,
     },
     // The cat's paw has a position, size, speed, and state
     paw: {
@@ -56,8 +58,24 @@ let timer = {
     max: 30,
     min: 0,
 };
+
+//State Sprites
+
+const screenSprites = {
+    titleScreenSprite: undefined,
+    fatScreenSprite: undefined,
+    hungerScreenSprite: undefined,
+}
 // the current State
 let state = "title"; // Can be "Tie" or "Game"
+
+//preload function for all images
+function preload() {
+    cat.body.sprite = loadImage("assets/images/CC_CatSprite.PNG")
+    screenSprites.titleScreenSprite = loadImage("assets/images/CC_Title.PNG")
+    screenSprites.fatScreenSprite = loadImage("assets/images/CC_Fat.PNG")
+    screenSprites.hungerScreenSprite = loadImage("assets/images/CC_Hungry.PNG")
+}
 
 /**
  * Creates the canvas and initializes the fly
@@ -92,13 +110,19 @@ function draw() {
 
 function title() {
     background("#6f217d");
-    text("Candy Cat", 100, 100);
-    text("The witch has left, grab as much candy as you can before she comes back!", 100, 200);
+    push();
+    imageMode(CENTER);
+    image(screenSprites.titleScreenSprite, width / 2, height / 2);
+    pop();
 
 }
 function gameOverHunger() {
     background("#6f217d");
-    text("Game Over. You were too Slow and are still hungry!", 100, 100)
+    push();
+    imageMode(CENTER);
+    image(screenSprites.hungerScreenSprite, width / 2, height / 2);
+    pop();
+
 
 }
 function gameOverWin() {
@@ -108,7 +132,10 @@ function gameOverWin() {
 }
 function GameOverFat() {
     background("#6f217d");
-    text("You were too fat and sluggish to hide from the witch. No treats for you for a week!", 100, 100)
+    push();
+    imageMode(CENTER);
+    image(screenSprites.fatScreenSprite, width / 2, height / 2);
+    pop();
 
 }
 function game() {
@@ -245,11 +272,18 @@ function drawcat() {
     pop();
 
     // Draw the cat's body
+    /*
     push();
     fill("#222222");
     noStroke();
     ellipse(cat.body.x, cat.body.y, cat.body.size);
     pop();
+    */
+    push();
+    imageMode(CENTER);
+    image(cat.body.sprite, cat.body.x, cat.body.y, cat.body.size)
+    pop();
+
 
 
 }
