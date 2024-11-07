@@ -44,15 +44,30 @@ const blueCandy = {
     x: 0,
     y: 200, // Will be random
     size: 10,
-    speed: 3
+    speed: 3,
+    fill: "#57d3e5",
+    points: 1,
 };
 
 const OrangeCandy = {
     x: 0,
     y: 200, // Will be random
     size: 15,
-    speed: 5
+    speed: 5,
+    fill:"#ffa94e",
+    points: 5,
 };
+
+const medicineCandy = {
+    x: 0,
+    y: 200, // Will be random
+    size: 15,
+    speed: 5,
+    fill:"#9bb26f",
+    points: -1,
+}
+
+
 
 //score variabel
 let score = 0;
@@ -90,8 +105,9 @@ function setup() {
     createCanvas(640, 480);
 
     // Give the candy their first random positions
-    resetBlueCandy();
-    resetOrangeCandy();
+    resetCandy(blueCandy);
+    resetCandy(OrangeCandy);
+    
 }
 //sets all the different possible states 
 function draw() {
@@ -152,15 +168,24 @@ function GameOverFat() {
 function game() {
 
     background("#ff9043");
-    moveBlueCandy();
-    drawBlueCandy();
-    moveOrangeCandy();
-    drawOrangeCandy();
+    //moveBlueCandy();
+    moveCandy(blueCandy);
+    drawCandy(blueCandy);
+    checkPawCandyOverlap(blueCandy);
+ 
+    //moveOrangeCandy();
+    moveCandy(OrangeCandy);
+    drawCandy(OrangeCandy);
+    checkPawCandyOverlap(OrangeCandy);
+
+    moveCandy(medicineCandy);
+    drawCandy(medicineCandy);
+    checkPawCandyOverlap(medicineCandy);
+
     movecat();
     movepaw();
     drawcat();
-    checkpawBlueCandyOverlap();
-    checkpawOrangeCandyOverlap();
+    
     drawScore();
     checkTimer();
     drawTimer();
@@ -170,40 +195,31 @@ function game() {
  * Moves the candy according to its speed
  * Resets the candy if it gets all the way to the right
  */
-function moveBlueCandy() {
-    // Move the Blue Candy
-    blueCandy.x += blueCandy.speed;
+
+//Refacotred - move Candy
+
+function moveCandy(candy){
+    
+    candy.x += candy.speed;
     // Handle the candy going off the canvas
-    if (blueCandy.x > width) {
-        resetBlueCandy();
+    if (candy.x > width) {
+        resetCandy(candy);
     }
 }
-function moveOrangeCandy() {
-    // Move the Blue Candy
-    OrangeCandy.x += OrangeCandy.speed;
-    // Handle the fly going off the canvas
-    if (OrangeCandy.x > width) {
-        resetOrangeCandy();
-    }
-}
+
 
 /**
  * Draws the candy as a blue or Orange circle
  */
-function drawBlueCandy() {
+
+function drawCandy(candy){
     push();
     noStroke();
-    fill("#5db5ff");
-    ellipse(blueCandy.x, blueCandy.y, blueCandy.size);
+    fill(candy.fill);
+    ellipse(candy.x, candy.y, candy.size);
     pop();
 }
-function drawOrangeCandy() {
-    push();
-    noStroke();
-    fill("#ffa94e");
-    ellipse(OrangeCandy.x, OrangeCandy.y, OrangeCandy.size);
-    pop();
-}
+
 
 //draw score in top right corner
 function drawScore() {
@@ -220,13 +236,11 @@ function drawScore() {
 /**
  * Resets the candy to the left with a random y
  */
-function resetBlueCandy() {
-    blueCandy.x = 0;
-    blueCandy.y = random(0, 300);
-}
-function resetOrangeCandy() {
-    OrangeCandy.x = 0;
-    OrangeCandy.y = random(0, 300);
+
+
+function resetCandy(candy){
+    candy.x = 0;
+    candy.y = random(0, 300);
 }
 /**
  * Moves the cat to the mouse position on x
@@ -296,34 +310,20 @@ function drawcat() {
 /**
  * Handles the paw overlapping the candy
  */
-function checkpawBlueCandyOverlap() {
-    // Get distance from paw to  candy
-    const d = dist(cat.paw.x, cat.paw.y, blueCandy.x, blueCandy.y);
-    // Check if it's an overlap
-    const eaten = (d < cat.paw.size / 2 + blueCandy.size / 2);
-    if (eaten) {
-        // increase the score
-        score = score + 1;
-        //increase cat size
-        cat.body.size = cat.body.size + 10;
-        // Reset the candy
-        resetBlueCandy();
-        // Bring back the paw
-        cat.paw.state = "inbound";
-    }
-}
-function checkpawOrangeCandyOverlap() {
+
+function checkPawCandyOverlap(candy){
     // Get distance from paw to candy
-    const d = dist(cat.paw.x, cat.paw.y, OrangeCandy.x, OrangeCandy.y);
+    const d = dist(cat.paw.x, cat.paw.y, candy.x, candy.y);
     // Check if it's an overlap
-    const eaten = (d < cat.paw.size / 2 + OrangeCandy.size / 2);
+    const eaten = (d < cat.paw.size / 2 + candy.size / 2);
     if (eaten) {
         // increase the score
-        score = score + 5;
+        score = score + candy.points;
         //increase cat size
-        cat.body.size = cat.body.size + 20;
+        cat.body.size = map(score, 0,100, 150, 400);
+       // cat.body.size = cat.body.size + 20;
         // Reset the candy
-        resetOrangeCandy();
+        resetCandy(candy);
         // Bring back the paw
         cat.paw.state = "inbound";
     }
@@ -373,7 +373,7 @@ function checkTimer() {
             state = "gameOverHunger";
         }
         // you found the right balance!
-        if (cat.body.size < 350 && score >= 20) {
+        if (cat.body.size < 250 && score >= 20) {
             state = "gameOverWin"
         }
 
