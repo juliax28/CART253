@@ -62,9 +62,9 @@ const medicineCandy = {
     x: 0,
     y: 200, // Will be random
     size: 15,
-    speed: 5,
+    speed: 10,
     fill:"#ea221b",
-    points: -5,
+    points: -10,
 }
 
 
