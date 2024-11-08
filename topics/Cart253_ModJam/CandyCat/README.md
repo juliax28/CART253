@@ -9,7 +9,7 @@ A game of catching candy and finding balance to not get caught
  a lesson? SPOILER! The only way to win is to find a good balance of candy to eat. There are three
  possible ednings.
 
-[Play it!](https://pippinbarr.github.io/cart253-examples/topics/making/frogfrogfrog/index.html)
+[Play it!]https://juliax28.github.io/CART253/topics/Cart253_ModJam/CandyCat/
 
 - [Ideas](./ideas.md)
 - [Planning](./planning.md)
