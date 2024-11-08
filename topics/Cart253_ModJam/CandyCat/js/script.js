@@ -54,16 +54,16 @@ const OrangeCandy = {
     y: 200, // Will be random
     size: 15,
     speed: 5,
-    fill:"#ffa94e",
+    fill: "#ffa94e",
     points: 5,
 };
-
+// 'medicine' that will decrease your weight and take off points
 const medicineCandy = {
     x: 0,
     y: 200, // Will be random
     size: 15,
     speed: 10,
-    fill:"#ea221b",
+    fill: "#ea221b",
     points: -10,
 }
 
@@ -87,7 +87,7 @@ const screenSprites = {
     winScreenSprite: undefined,
 }
 // the current State
-let state = "title"; 
+let state = "title";
 
 //preload function for all images
 function preload() {
@@ -107,7 +107,7 @@ function setup() {
     // Give the candy their first random positions
     resetCandy(blueCandy);
     resetCandy(OrangeCandy);
-    
+
 }
 //sets all the different possible states 
 function draw() {
@@ -168,38 +168,34 @@ function GameOverFat() {
 function game() {
 
     background("#ff9043");
-    //moveBlueCandy
+    //Blue Candy
     moveCandy(blueCandy);
     drawCandy(blueCandy);
     checkPawCandyOverlap(blueCandy);
- 
-    //moveOrangeCandy
+
+    //Orange Candy
     moveCandy(OrangeCandy);
     drawCandy(OrangeCandy);
     checkPawCandyOverlap(OrangeCandy);
-
+    //medicine candy
     moveCandy(medicineCandy);
     drawCandy(medicineCandy);
     checkPawCandyOverlap(medicineCandy);
-
+    //cat
     movecat();
     movepaw();
     drawcat();
-    
+    //timers and score
     drawScore();
     checkTimer();
     drawTimer();
     countDown();
 }
-/**
- * Moves the candy according to its speed
- * Resets the candy if it gets all the way to the right
- */
 
 //Refacotred - move Candy
 
-function moveCandy(candy){
-    
+function moveCandy(candy) {
+
     candy.x += candy.speed;
     // Handle the candy going off the canvas
     if (candy.x > width) {
@@ -212,7 +208,7 @@ function moveCandy(candy){
  * Draws the candy as a blue or Orange circle
  */
 
-function drawCandy(candy){
+function drawCandy(candy) {
     push();
     noStroke();
     fill(candy.fill);
@@ -238,7 +234,7 @@ function drawScore() {
  */
 
 
-function resetCandy(candy){
+function resetCandy(candy) {
     candy.x = 0;
     candy.y = random(0, 300);
 }
@@ -297,7 +293,7 @@ function drawcat() {
     pop();
 
     // Draw the cat's body, it has a size, position and an associated sprite
-    
+
     push();
     imageMode(CENTER);
     image(cat.body.sprite, cat.body.x, cat.body.y, cat.body.size)
@@ -311,7 +307,7 @@ function drawcat() {
  * Handles the paw overlapping the candy
  */
 
-function checkPawCandyOverlap(candy){
+function checkPawCandyOverlap(candy) {
     // Get distance from paw to candy
     const d = dist(cat.paw.x, cat.paw.y, candy.x, candy.y);
     // Check if it's an overlap
@@ -320,8 +316,8 @@ function checkPawCandyOverlap(candy){
         // increase the score
         score = score + candy.points;
         //increase cat size
-        cat.body.size = map(score, 0,100, 150, 400);
-       // cat.body.size = cat.body.size + 20;
+        cat.body.size = map(score, 0, 100, 150, 400);
+        // cat.body.size = cat.body.size + 20;
         // Reset the candy
         resetCandy(candy);
         // Bring back the paw
