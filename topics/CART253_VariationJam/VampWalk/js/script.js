@@ -80,18 +80,22 @@ function drawVamp() {
 function moveVamp() {
   if (keyIsDown(LEFT_ARROW) === true) {
     vamp.x -= 1;
+    vamp.sprite = vampSprites.left;
   }
 
   if (keyIsDown(RIGHT_ARROW) === true) {
     vamp.x += 1;
+    vamp.sprite = vampSprites.right;
   }
 
   if (keyIsDown(UP_ARROW) === true) {
     vamp.y -= 1;
+    vamp.sprite = vampSprites.up;
   }
 
   if (keyIsDown(DOWN_ARROW) === true) {
     vamp.y += 1;
+    vamp.sprite = vampSprites.down;
   }
 
 }
