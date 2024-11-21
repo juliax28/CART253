@@ -59,8 +59,9 @@ function setup() {
 */
 function draw() {
   background("#000000");
-  drawVamp();
+
   moveVamp();
+  drawVamp();
 
 }
 
@@ -78,24 +79,40 @@ function drawVamp() {
 //move the vamp
 
 function moveVamp() {
+  let animated = false;
   if (keyIsDown(LEFT_ARROW) === true) {
     vamp.x -= 1;
     vamp.sprite = vampSprites.left;
+    animated = true;
   }
+
 
   if (keyIsDown(RIGHT_ARROW) === true) {
     vamp.x += 1;
     vamp.sprite = vampSprites.right;
+    animated = true;
   }
+
+
 
   if (keyIsDown(UP_ARROW) === true) {
     vamp.y -= 1;
     vamp.sprite = vampSprites.up;
+    animated = true;
   }
 
   if (keyIsDown(DOWN_ARROW) === true) {
     vamp.y += 1;
     vamp.sprite = vampSprites.down;
+    animated = true;
   }
+  if (animated === false) {
+    resetSprite();
+  }
+
+}
+
+function resetSprite() {
+  vamp.sprite = vampSprites.idle;
 
 }
