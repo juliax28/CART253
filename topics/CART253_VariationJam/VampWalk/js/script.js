@@ -23,7 +23,7 @@ const vampSprites = {
   down: undefined,
   idle: undefined,
 
-}
+};
 
 function preload() {
   vampSprites.left = loadImage("assets/images/vampLeft.PNG")
@@ -31,7 +31,7 @@ function preload() {
   vampSprites.up = loadImage("assets/images/vampUp.PNG")
   vampSprites.down = loadImage("assets/images/vampDown.PNG")
   vampSprites.idle = loadImage("assets/images/vampDown.PNG")
-}
+};
 
 let vamp = {
   x: 200,
@@ -45,13 +45,22 @@ let vamp = {
 
 };
 
+let path = {
+  x: 30,
+  y: 20,
+  length: 55,
+  height: 55,
+
+
+};
+
 
 
 
 function setup() {
   createCanvas(580, 240);
   vamp.sprite = vampSprites.idle;
-}
+};
 
 
 /**
@@ -121,6 +130,16 @@ function resetSprite() {
 function drawPath() {
   push();
   fill("#807676");
-  rect(30, 20, 55, 55);
+  rect(path.x, path.y, path.height, path.length);
   pop();
 }
+
+
+// function checkVampPathOverlap() {
+//   // Get distance from paw to candy
+//   const d = dist(vamp.x, vamp.y, path.x, path.y);
+//   // Check if it's an overlap
+//   const eaten = (d < cat.paw.size / 2 + candy.size / 2);
+//   if (eaten) {
+
+//   }
