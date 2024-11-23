@@ -30,7 +30,7 @@ function preload() {
   vampSprites.right = loadImage("assets/images/vampRight.PNG")
   vampSprites.up = loadImage("assets/images/vampUp.PNG")
   vampSprites.down = loadImage("assets/images/vampDown.PNG")
-  vampSprites.idle = loadImage("assets/images/clown.png")
+  vampSprites.idle = loadImage("assets/images/vampDown.PNG")
 }
 
 let vamp = {
@@ -59,9 +59,10 @@ function setup() {
 */
 function draw() {
   background("#000000");
-
+  drawPath();
   moveVamp();
   drawVamp();
+
 
 }
 
@@ -115,4 +116,11 @@ function moveVamp() {
 function resetSprite() {
   vamp.sprite = vampSprites.idle;
 
+}
+
+function drawPath() {
+  push();
+  fill("#807676");
+  rect(30, 20, 55, 55);
+  pop();
 }
