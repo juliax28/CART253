@@ -34,8 +34,8 @@ function preload() {
 };
 
 let vamp = {
-  x: 200,
-  y: 200,
+  x: 30,
+  y: 20,
   sprite: undefined,
   speed: 1,
   velocity: 4,
@@ -69,7 +69,7 @@ function draw() {
   drawPath();
   moveVamp();
   drawVamp();
-
+  checkVampPathOverlap();
 
 }
 
@@ -136,10 +136,11 @@ function drawPath() {
 function checkVampPathOverlap() {
 
   const distance = dist(vamp.x, vamp.y, path.x, path.y);
-  const vampPathOverlap = (distance < vamp.size);
+  const vampPathOverlap = (distance > vamp.size);
   if (vampPathOverlap) {
-    //If the wolf touches the sheep, the sheep will turn red and stop interacting with the mouse
-    vamp.y = vamp.
+
+    vamp.y = vamp.y + vamp.velocity;
+
   }
 
 
