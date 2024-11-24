@@ -40,8 +40,6 @@ let vamp = {
   speed: 1,
   velocity: 4,
   size: 20,
-  width: 50,
-  height: 50,
 
 };
 
@@ -135,11 +133,15 @@ function drawPath() {
 }
 
 
-// function checkVampPathOverlap() {
-//   // Get distance from paw to candy
-//   const d = dist(vamp.x, vamp.y, path.x, path.y);
-//   // Check if it's an overlap
-//   const eaten = (d < cat.paw.size / 2 + candy.size / 2);
-//   if (eaten) {
+function checkVampPathOverlap() {
 
-//   }
+  const distance = dist(vamp.x, vamp.y, path.x, path.y);
+  const vampPathOverlap = (distance < vamp.size);
+  if (vampPathOverlap) {
+    //If the wolf touches the sheep, the sheep will turn red and stop interacting with the mouse
+    vamp.y = vamp.
+  }
+
+
+}
+
