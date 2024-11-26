@@ -84,6 +84,16 @@ function drawVamp() {
 
 }
 
+
+
+function drawPath() {
+  push();
+  fill("#807676");
+  rectMode(CENTER);
+  rect(path.x, path.y, path.height, path.width);
+  pop();
+}
+
 //move the vamp
 
 function moveVamp() {
@@ -124,24 +134,15 @@ function resetSprite() {
   vamp.sprite = vampSprites.idle;
 
 }
-
-function drawPath() {
-  push();
-  fill("#807676");
-  rect(path.x, path.y, path.height, path.width);
-  pop();
-}
-
-
 function checkVampPathOverlap() {
   // First: is the right side of the user rect to the right or the left side of the target?
-  const vampPathOverlap = (vamp.size / 2 > path.x - path.width / 2 &&
+  const vampPathOverlap = (vamp.x + vamp.size / 2 > path.x - path.width / 2 &&
     // Second: is the left side of the user rect to the left of the right side of the target?
-    vamp.size / 2 < path.x + path.width / 2 &&
+    vamp.x - vamp.size / 2 < path.x + path.width / 2 &&
     // Third: is the bottom of the user rect below the top of the target?
-    vamp.size / 2 > path.y - path.height / 2 &&
+    vamp.y + vamp.size / 2 > path.y - path.height / 2 &&
     // Fourth: is the top of the user rect above the bottom of the target?
-    vamp.size / 2 < path.y + path.height / 2);
+    vamp.y - vamp.size / 2 < path.y + path.height / 2);
   if (!vampPathOverlap) {
 
     vamp.y = vamp.y + vamp.velocity;
@@ -149,7 +150,5 @@ function checkVampPathOverlap() {
   }
 
 }
-
-
 
 
