@@ -13,7 +13,7 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
-
+let state = "title"
 
 
 const vampSprites = {
@@ -34,8 +34,8 @@ function preload() {
 };
 
 let vamp = {
-  x: 55,
-  y: 55,
+  x: 200,
+  y: 200,
   sprite: undefined,
   speed: 1,
   velocity: 4,
@@ -44,12 +44,10 @@ let vamp = {
 };
 
 let path = {
-  x: 30,
-  y: 20,
+  x: 200,
+  y: 200,
   width: 55,
   height: 55,
-
-
 };
 
 
@@ -64,7 +62,34 @@ function setup() {
 /**
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
 */
+
 function draw() {
+  if (state === "title") {
+    title();
+
+  }
+  if (state === "game")
+    game();
+
+  if (state === "gameOver") {
+    gameOverHunger();
+
+  }
+}
+
+//draw the vamp
+function title() {
+  background("#ad2222");
+}
+
+function mousePressed() {
+  if (state === "title") {
+    state = "game";
+  }
+}
+
+
+function game() {
   background("#000000");
   drawPath();
   moveVamp();
@@ -72,8 +97,6 @@ function draw() {
   checkVampPathOverlap();
 
 }
-
-//draw the vamp
 function drawVamp() {
   push();
   ellipse(vamp.x, vamp.y, vamp.size)
