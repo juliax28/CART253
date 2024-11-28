@@ -22,18 +22,9 @@ let state = "title"
 //Level 01 Dialogue
 
 const level01Dialogue = [
-  "Ahem...",
-  "*cough* *cough* *cough*",
-  "Sorry, sorry... here we go...",
-  "Friends, Romans, countrymen, lend me your ears;",
-  "I come to bury Caesar, not to praise him.",
-  "The evil that men do lives after them;",
-  "The good is oft interred with their bones;",
-  "So let it be with Caesar. The noble Brutus",
-  "Hath told you Caesar was ambitious:",
-  "If it were so, it was a grievous fault,",
-  "And grievously hath Caesar answer’d it.",
-  "*cough* Thank you *cough*"
+  "Ouch... my head...",
+  "Wait.. what is this place...?",
+
 ];
 
 
