@@ -1,7 +1,7 @@
 /**
  * VampWalk
  * Julia Axiuk
- * 
+ *
  * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
  * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
  */
@@ -43,7 +43,7 @@ let dialogueIndex = 0;
 // Dialog box specification
 let speechBox = {
   x: 50,
-  y: 300,
+  y: 100,
   width: 300,
   height: 80,
   padding: 20,
@@ -74,6 +74,7 @@ let vamp = {
   speed: 1,
   velocity: 4,
   size: 20,
+  falling: false,
 
 };
 
@@ -102,10 +103,9 @@ function draw() {
     title();
 
   }
-  if (state === "game")
+  if (state === "game") {
     game();
-
-
+  }
 }
 
 //draw the vamp
@@ -118,10 +118,16 @@ function title() {
 
 function game() {
   background("#000000");
-  drawPath();
   moveVamp();
-  drawVamp();
   checkVampPathOverlap();
+  if (vamp.falling) {
+    drawVamp();
+    drawPath();
+  }
+  else {
+    drawPath();
+    drawVamp();
+  }
   showDialog();
 }
 
@@ -165,17 +171,23 @@ function moveVamp() {
   }
 
 
+  if (vamp.falling === false) {
+    if (keyIsDown(UP_ARROW) === true) {
+      vamp.y -= 1;
+      vamp.sprite = vampSprites.up;
+      animated = true;
+    }
 
-  if (keyIsDown(UP_ARROW) === true) {
-    vamp.y -= 1;
-    vamp.sprite = vampSprites.up;
-    animated = true;
+    if (keyIsDown(DOWN_ARROW) === true) {
+      vamp.y += 1;
+      vamp.sprite = vampSprites.down;
+      animated = true;
+    }
   }
+  else {
+    vamp.y = vamp.y + vamp.velocity;
 
-  if (keyIsDown(DOWN_ARROW) === true) {
-    vamp.y += 1;
-    vamp.sprite = vampSprites.down;
-    animated = true;
+
   }
   if (animated === false) {
     resetSprite();
@@ -198,7 +210,8 @@ function checkVampPathOverlap() {
     vamp.y - vamp.size / 2 < path.y + path.width / 2);
   if (!vampPathOverlap) {
 
-    vamp.y = vamp.y + vamp.velocity;
+    vamp.falling = true;
+
 
   }
 
@@ -210,7 +223,7 @@ function showDialog() {
   fill(0);
   stroke(255);
   strokeWeight(3);
-  rect(box.x, box.y, box.width, box.height);
+  rect(speechBox.x, speechBox.y, speechBox.width, speechBox.height);
   pop();
 
   // The text
