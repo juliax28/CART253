@@ -40,6 +40,7 @@ const level01Dialogue = [
 //dialogue index
 
 let dialogueIndex = 0;
+let showBox = false;
 // Dialog box specification
 let speechBox = {
   x: 50,
@@ -86,6 +87,8 @@ let path = {
 };
 
 
+let dialogueTimer = 0;
+
 
 
 function setup() {
@@ -95,7 +98,7 @@ function setup() {
 
 
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
+ * Decides the state
 */
 
 function draw() {
@@ -116,6 +119,9 @@ function title() {
 
 
 
+
+
+
 function game() {
   background("#000000");
   moveVamp();
@@ -128,7 +134,10 @@ function game() {
     drawPath();
     drawVamp();
   }
-  showDialog();
+  // dialogCountUp();
+  drawTimer();
+  checkTimer();
+  // showDialogue();
 }
 
 
@@ -142,8 +151,6 @@ function drawVamp() {
   pop();
 
 }
-
-
 
 function drawPath() {
   push();
@@ -199,6 +206,34 @@ function resetSprite() {
   vamp.sprite = vampSprites.idle;
 
 }
+
+
+
+
+//Functions that deal with the dialogue box timer
+// function dialogCountUp() {
+//   dialogueTimer += 1;
+//   if (dialogueTimer)
+// }
+
+// displays the timer
+function drawTimer() {
+  push();
+  textAlign(CENTER, TOP);
+  textSize(100);
+  text(floor(dialogueTimer), 100, 100);
+  pop();
+}
+//When the timer reaches 0, this will choose which reasult will happen
+function checkTimer() {
+  if (showBox === true) {
+    showDialog();
+  }
+}
+
+
+
+//Vamp path interaction
 function checkVampPathOverlap() {
   // First: is the right side of the user rect to the right or the left side of the target?
   const vampPathOverlap = (vamp.x + vamp.size / 2 > path.x - path.height / 2 &&
@@ -218,6 +253,7 @@ function checkVampPathOverlap() {
 }
 
 function showDialog() {
+
   // The background box
   push();
   fill(0);
@@ -240,13 +276,37 @@ function showDialog() {
 function mousePressed() {
   if (state === "title") {
     state = "game";
+    setTimeout(showTheDialog, 1000);
   }
-  if (state === "game") {
-    // Make sure we're not at the end of the speech aready
-    if (dialogueIndex < level01Dialogue.length - 1) {
-      // Advance the line
-      dialogueIndex++;
+  if (state === "game" && showBox === true) {
+    dialogueIndex++;
+    if (dialogueIndex === level01Dialogue.length) {
+      showBox = false;
     }
+    // Make sure we're not at the end of the speech aready
+    // if (dialogueIndex < level01Dialogue.length - 1) {
+    // Advance the line
   }
+  //   else if (dialogueIndex === level01Dialogue.length)
 }
+
+function showTheDialog() {
+  showBox = true;
+}
+
+
+//Hide the dialogue when the dialogue is done
+
+
+// function showDialogue() {
+//   if (dialogueIndex < level01Dialogue.length && dialogueTimer > 60) {
+//     showBox = true;
+//   }
+//   else {
+//     showBox = false;
+//   }
+
+// }
+
+
 
