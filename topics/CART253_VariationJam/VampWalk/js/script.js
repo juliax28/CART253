@@ -144,7 +144,6 @@ function game() {
 
 function drawVamp() {
   push();
-  ellipse(vamp.x, vamp.y, vamp.size)
   fill("#FFFFFF");
   imageMode(CENTER);
   image(vamp.sprite, vamp.x, vamp.y);
