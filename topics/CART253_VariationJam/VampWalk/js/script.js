@@ -27,7 +27,10 @@ const level01Dialogue = [
 
 ];
 
-
+let canvas = {
+  height: 240,
+  width: 580,
+}
 //dialogue index
 
 let dialogueIndex = 0;
@@ -72,9 +75,9 @@ let vamp = {
 
 let lv01path01 = {
   x: 200,
-  y: 200,
+  y: 100,
   height: 55,
-  width: 300,
+  width: 200,
 };
 
 let lv01path02 = {
@@ -84,10 +87,12 @@ let lv01path02 = {
   width: 50,
 };
 
-let gem = {
-  x: undefined,
-  y: undefined,
+let lv01Gem = {
+  x: 200,
+  y: 100,
+  size: 55,
   sprite: undefined,
+
 }
 
 
@@ -96,7 +101,7 @@ let dialogueTimer = 0;
 
 
 function setup() {
-  createCanvas(580, 240);
+  createCanvas(canvas.width, canvas.height);
   vamp.sprite = vampSprites.idle;
 };
 
@@ -112,6 +117,9 @@ function draw() {
   }
   if (state === "game") {
     game();
+  }
+  if (state === "GameOver") {
+    GameOver();
   }
 }
 
@@ -145,8 +153,13 @@ function game() {
   drawTimer();
   checkTimer();
   // showDialogue();
+  //Check if vamp has fallen and died
+  checkGameOver();
 }
 
+function GameOver() {
+  background("#ff36c8");
+}
 
 
 function drawVamp() {
@@ -164,6 +177,14 @@ function drawPath(path) {
   rectMode(CENTER);
   rect(path.x, path.y, path.height, path.width);
   pop();
+}
+
+function drawGem(gem) {
+  rotateY(frameCount * 0.01);
+
+  // Draw the square.
+  square(gem.x, gem.y, gem.size);
+  fill('#A251FA');
 }
 
 //move the vamp
@@ -258,6 +279,18 @@ function checkVampPathOverlap(path) {
 
 }
 
+function checkGameOver() {
+  if (vamp.y > canvas.height) {
+    state = "GameOver";
+    console.log("success");
+  }
+  else {
+    console.log("failed");
+  }
+
+}
+
+
 function showDialog() {
 
   // The background box
@@ -289,30 +322,17 @@ function mousePressed() {
     if (dialogueIndex === level01Dialogue.length) {
       showBox = false;
     }
-    // Make sure we're not at the end of the speech aready
-    // if (dialogueIndex < level01Dialogue.length - 1) {
-    // Advance the line
+
+
   }
-  //   else if (dialogueIndex === level01Dialogue.length)
+
+
 }
 
 function showTheDialog() {
   showBox = true;
 }
 
-
-//Hide the dialogue when the dialogue is done
-
-
-// function showDialogue() {
-//   if (dialogueIndex < level01Dialogue.length && dialogueTimer > 60) {
-//     showBox = true;
-//   }
-//   else {
-//     showBox = false;
-//   }
-
-// }
 
 
 
