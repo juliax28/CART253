@@ -23,7 +23,7 @@ let state = "title"
 
 const level01Dialogue = [
   "Ouch... my head...",
-  "Wait.. what is this place...?",
+  "Wait... what is this place...?",
 
 ];
 
@@ -70,12 +70,25 @@ let vamp = {
 
 };
 
-let path = {
+let lv01path01 = {
   x: 200,
   y: 200,
   height: 55,
   width: 300,
 };
+
+let lv01path02 = {
+  x: 200,
+  y: 25,
+  height: 300,
+  width: 50,
+};
+
+let gem = {
+  x: undefined,
+  y: undefined,
+  sprite: undefined,
+}
 
 
 let dialogueTimer = 0;
@@ -116,13 +129,16 @@ function title() {
 function game() {
   background("#000000");
   moveVamp();
-  checkVampPathOverlap();
+  checkVampPathOverlap(lv01path01);
+  checkVampPathOverlap(lv01path01);
   if (vamp.falling) {
     drawVamp();
-    drawPath();
+    drawPath(lv01path01);
+    drawPath(lv01path02);
   }
   else {
-    drawPath();
+    drawPath(lv01path01);
+    drawPath(lv01path02);
     drawVamp();
   }
   // dialogCountUp();
@@ -142,7 +158,7 @@ function drawVamp() {
 
 }
 
-function drawPath() {
+function drawPath(path) {
   push();
   fill("#807676");
   rectMode(CENTER);
@@ -224,7 +240,7 @@ function checkTimer() {
 
 
 //Vamp path interaction
-function checkVampPathOverlap() {
+function checkVampPathOverlap(path) {
   // First: is the right side of the user rect to the right or the left side of the target?
   const vampPathOverlap = (vamp.x + vamp.size / 2 > path.x - path.height / 2 &&
     // Second: is the left side of the user rect to the left of the right side of the target?
