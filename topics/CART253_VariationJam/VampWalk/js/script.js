@@ -91,6 +91,7 @@ let lv01path02 = {
 const lv01Gem = {
   x: 200,
   y: 150,
+  size: 20,
   sprite: undefined,
 
 }
@@ -115,8 +116,11 @@ function draw() {
     title();
 
   }
-  if (state === "game") {
-    game();
+  if (state === "gamelv01") {
+    gamelv01();
+  }
+  if (state === "gamelv02") {
+    gamelv02();
   }
   if (state === "GameOver") {
     GameOver();
@@ -134,7 +138,7 @@ function title() {
 
 
 
-function game() {
+function gamelv01() {
   background("#000000");
   moveVamp();
   checkVampPathOverlap(lv01path01);
@@ -151,12 +155,16 @@ function game() {
   }
   // dialogCountUp();
   drawGem(lv01Gem);
+  checkVampGemOverlap(lv01Gem);
 
   checkTimer();
   // showDialogue();
   //Check if vamp has fallen and died
   checkGameOver();
 }
+function gamelv02() {
+  background("#1f4391");
+};
 
 function GameOver() {
   background("#ff36c8");
@@ -167,6 +175,7 @@ function drawVamp() {
   push();
   fill("#FFFFFF");
   imageMode(CENTER);
+  ellipse(vamp.x, vamp.y, vamp.size);
   image(vamp.sprite, vamp.x, vamp.y);
   pop();
 
@@ -181,9 +190,8 @@ function drawPath(path) {
 }
 
 function drawGem(gem) {
-  ellipse(gem.x, gem.y, 5);
-  fill('#A251FA');
-  image(gem.sprite, gem.x, gem.y)
+  ellipse(gem.x, gem.y, gem.size);
+  image(gem.sprite, gem.x, gem.y);
   imageMode(CENTER);
 }
 
@@ -252,7 +260,16 @@ function checkTimer() {
   }
 }
 
-
+function checkVampGemOverlap(gem) {
+  // Get distance from paw to candy
+  const d = dist(vamp.x, vamp.y, gem.x, gem.y);
+  // Check if it's an overlap
+  const gemAquired = (d < vamp.size / 2 + gem.size / 2);
+  if (gemAquired) {
+    state = "gamelv02";
+    console.log();
+  }
+}
 
 //Vamp path interaction
 function checkVampPathOverlap(path) {
@@ -276,10 +293,7 @@ function checkVampPathOverlap(path) {
 function checkGameOver() {
   if (vamp.y > canvas.height) {
     state = "GameOver";
-    console.log("success");
-  }
-  else {
-    console.log("failed");
+
   }
 
 }
@@ -308,10 +322,10 @@ function showDialog() {
 
 function mousePressed() {
   if (state === "title") {
-    state = "game";
+    state = "gamelv01";
     setTimeout(showTheDialog, 1000);
   }
-  if (state === "game" && showBox === true) {
+  if (state === "gamelv01" && showBox === true) {
     dialogueIndex++;
     if (dialogueIndex === level01Dialogue.length) {
       showBox = false;
