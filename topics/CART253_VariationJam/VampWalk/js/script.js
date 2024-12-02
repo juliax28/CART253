@@ -60,6 +60,7 @@ function preload() {
   vampSprites.up = loadImage("assets/images/vampUp.PNG")
   vampSprites.down = loadImage("assets/images/vampDown.PNG")
   vampSprites.idle = loadImage("assets/images/vampDown.PNG")
+  lv01Gem.sprite = loadImage("assets/images/gem01.png")
 };
 
 let vamp = {
@@ -87,10 +88,9 @@ let lv01path02 = {
   width: 50,
 };
 
-let lv01Gem = {
+const lv01Gem = {
   x: 200,
-  y: 100,
-  size: 55,
+  y: 150,
   sprite: undefined,
 
 }
@@ -150,7 +150,8 @@ function game() {
     drawVamp();
   }
   // dialogCountUp();
-  drawTimer();
+  drawGem(lv01Gem);
+
   checkTimer();
   // showDialogue();
   //Check if vamp has fallen and died
@@ -180,11 +181,10 @@ function drawPath(path) {
 }
 
 function drawGem(gem) {
-  rotateY(frameCount * 0.01);
-
-  // Draw the square.
-  square(gem.x, gem.y, gem.size);
+  ellipse(gem.x, gem.y, 5);
   fill('#A251FA');
+  image(gem.sprite, gem.x, gem.y)
+  imageMode(CENTER);
 }
 
 //move the vamp
@@ -244,13 +244,7 @@ function resetSprite() {
 // }
 
 // displays the timer
-function drawTimer() {
-  push();
-  textAlign(CENTER, TOP);
-  textSize(100);
-  text(floor(dialogueTimer), 100, 100);
-  pop();
-}
+
 //When the timer reaches 0, this will choose which reasult will happen
 function checkTimer() {
   if (showBox === true) {
