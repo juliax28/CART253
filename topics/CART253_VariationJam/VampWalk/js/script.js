@@ -91,7 +91,7 @@ let lv01path02 = {
 const lv01Gem = {
   x: 200,
   y: 150,
-  size: 20,
+  size: 5,
   sprite: undefined,
 
 }
@@ -175,7 +175,7 @@ function drawVamp() {
   push();
   fill("#FFFFFF");
   imageMode(CENTER);
-  ellipse(vamp.x, vamp.y, vamp.size);
+
   image(vamp.sprite, vamp.x, vamp.y);
   pop();
 
@@ -255,8 +255,8 @@ function resetSprite() {
 
 //When the timer reaches 0, this will choose which reasult will happen
 function checkTimer() {
-  if (showBox === true) {
-    showDialog();
+  if (showBox === true && state === "gamelv01") {
+    showDialog(level01Dialogue);
   }
 }
 
@@ -299,7 +299,7 @@ function checkGameOver() {
 }
 
 
-function showDialog() {
+function showDialog(dialogue) {
 
   // The background box
   push();
@@ -316,7 +316,7 @@ function showDialog() {
   push();
   fill(255);
   textSize(18);
-  text(level01Dialogue[dialogueIndex], speechBox.x + speechBox.padding, speechBox.y + speechBox.padding, speechBox.width - 2 * speechBox.padding, speechBox.height - 2 * speechBox.padding);
+  text(dialogue[dialogueIndex], speechBox.x + speechBox.padding, speechBox.y + speechBox.padding, speechBox.width - 2 * speechBox.padding, speechBox.height - 2 * speechBox.padding);
   pop();
 }
 
