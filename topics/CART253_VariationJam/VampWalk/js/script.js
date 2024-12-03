@@ -74,22 +74,22 @@ let vamp = {
 
 };
 
-let paths = [
+
+let lv01paths = [
   {
     x: 200,
     y: 100,
     height: 55,
     width: 200,
-  }
+  },
 
-{
+  {
     x: 200,
     y: 25,
     height: 300,
     width: 50,
   }
 ]
-
 
 
 const lv01Gem = {
@@ -145,16 +145,14 @@ function title() {
 function gamelv01() {
   background("#000000");
   moveVamp();
-  checkVampPathOverlap(lv01path01);
-  checkVampPathOverlap(lv01path01);
+  // checkVampPathOverlap(lv01path01);
+  // checkVampPathOverlap(lv01path01);
   if (vamp.falling) {
     drawVamp();
-    drawPath(lv01path01);
-    drawPath(lv01path02);
+    drawlv01Paths();
   }
   else {
-    drawPath(lv01path01);
-    drawPath(lv01path02);
+    drawlv01Paths();
     drawVamp();
   }
   // dialogCountUp();
@@ -185,12 +183,16 @@ function drawVamp() {
 
 }
 
-function drawPath(path) {
-  push();
-  fill("#807676");
-  rectMode(CENTER);
-  rect(path.x, path.y, path.height, path.width);
-  pop();
+function drawlv01Paths() {
+
+  for (let lv01path of lv01paths) {
+    push();
+    fill("#807676");
+    rectMode(CENTER);
+    rect(lv01path.x, lv01path.y, lv01path.height, lv01path.width);
+    pop();
+  }
+
 }
 
 function drawGem(gem) {
@@ -276,44 +278,44 @@ function checkVampGemOverlap(gem) {
 }
 
 //Vamp path interaction
-function checkVampPathOverlap(path) {
-  // First: is the right side of the user rect to the right or the left side of the target?
-  const vampPathOverlap = (vamp.x + vamp.size / 2 > path.x - path.height / 2 &&
-    // Second: is the left side of the user rect to the left of the right side of the target?
-    vamp.x - vamp.size / 2 < path.x + path.height / 2 &&
-    // Third: is the bottom of the user rect below the top of the target?
-    vamp.y + vamp.size / 2 > path.y - path.width / 2 &&
-    // Fourth: is the top of the user rect above the bottom of the target?
-    vamp.y - vamp.size / 2 < path.y + path.width / 2);
-  if (!vampPathOverlap) {
+// function checkVampPathOverlap(path) {
+//   // First: is the right side of the user rect to the right or the left side of the target?
+//   const vampPathOverlap = (vamp.x + vamp.size / 2 > path.x - path.height / 2 &&
+//     // Second: is the left side of the user rect to the left of the right side of the target?
+//     vamp.x - vamp.size / 2 < path.x + path.height / 2 &&
+//     // Third: is the bottom of the user rect below the top of the target?
+//     vamp.y + vamp.size / 2 > path.y - path.width / 2 &&
+//     // Fourth: is the top of the user rect above the bottom of the target?
+//     vamp.y - vamp.size / 2 < path.y + path.width / 2);
+//   if (!vampPathOverlap) {
 
-    vamp.falling = true;
-
-
-  }
-
-}
+//     vamp.falling = true;
 
 
-function checkPaths() {
-  // Assume they are falling (we will try to "prove" they aren't)
-  let fall = true;
-  // Go through *every* pTH
-  for (let path of paths) {
-    // Check if the player overlaps this path and aren't falling
-    if (player overlaps this path and is not already falling) {
-      // If they do overlap it, they are NOT falling
-      fall = false;
-      // Can stop the loop because we found one the player is standing on
-      break;
-    }
-  }
-  // If we get through the full loop and fall is still true, then
-  // there was NO path they were standing on, so they fall
-  if (fall) {
-    // Make the player fall
-  }
-}
+//   }
+
+// }
+
+
+// function checkPaths() {
+//   // Assume they are falling (we will try to "prove" they aren't)
+//   let fall = true;
+//   // Go through *every* pTH
+//   for (let path of paths) {
+//     // Check if the player overlaps this path and aren't falling
+//     if (player overlaps this path and is not already falling) {
+//       // If they do overlap it, they are NOT falling
+//       fall = false;
+//       // Can stop the loop because we found one the player is standing on
+//       break;
+//     }
+//   }
+//   // If we get through the full loop and fall is still true, then
+//   // there was NO path they were standing on, so they fall
+//   if (fall) {
+//     // Make the player fall
+//   }
+// }
 
 
 function checkGameOver() {
