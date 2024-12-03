@@ -291,13 +291,14 @@ function checklv01Paths() {
       vamp.falling = false;
       // Can stop the loop because we found one the player is standing on
       break;
+
     }
   }
 
   if (vamp.falling === true) {
     vamp.y = vamp.y + vamp.velocity;
   }
-  console.log();
+
 }
 
 
