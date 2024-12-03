@@ -32,6 +32,17 @@ const level01Dialogue = [
 
 ];
 
+const level02Dialogue = [
+  "Ouch... my head...",
+  // "Wait... what is this place...?",
+  // "I must've fallen into the dungeon... I have to be careful.",
+
+  // "And... oh! A GEM!",
+  // "I should get to it...that's how it usually works, right?",
+  // "One must reach the shiny thing on the other end to get out...",
+
+];
+
 let canvas = {
   height: 240,
   width: 580,
@@ -124,7 +135,50 @@ let lv01paths = [
   },
 
 ]
+let lv02paths = [
+  {
+    x: 0,
+    y: 100,
+    height: 55,
+    width: 200,
+  },
 
+  {
+    x: 100,
+    y: 150,
+    height: 150,
+    width: 10,
+  },
+
+  {
+    x: 180,
+    y: 105,
+    height: 10,
+    width: 100,
+  },
+
+  {
+    x: 225,
+    y: 50,
+    height: 100,
+    width: 10,
+  },
+
+  {
+    x: 325,
+    y: 150,
+    height: 10,
+    width: 106,
+  },
+
+  {
+    x: 450,
+    y: 200,
+    height: 250,
+    width: 5,
+  },
+
+]
 
 const lv01Gem = {
   x: 550,
@@ -163,6 +217,7 @@ function draw() {
   if (state === "GameOver") {
     GameOver();
   }
+  checkTimer();
 }
 
 //draw the vamp
@@ -193,7 +248,7 @@ function gamelv01() {
   drawGem(lv01Gem);
   checkVampGemOverlap(lv01Gem);
 
-  checkTimer();
+
   // showDialogue();
   //Check if vamp has fallen and died
   checkGameOver();
@@ -203,9 +258,27 @@ function gamelv01() {
 
 function gamelv02() {
   background("#1f4391");
-  drawVamp();
   moveVamp();
+  checklv01Paths(lv02paths)
+
+  if (vamp.falling === true) {
+    drawVamp();
+    drawPaths(lv02paths);
+  }
+  else {
+    drawPaths(lv02paths);
+    drawVamp();
+  }
+  // dialogCountUp();
+  drawGem(lv01Gem);
+  checkVampGemOverlap(lv01Gem);
+
+
+  // showDialogue();
+  //Check if vamp has fallen and died
+  checkGameOver();
 };
+
 
 function GameOver() {
   background("#ff36c8");
@@ -289,13 +362,74 @@ function resetSprite() {
 }
 
 
-
-
+// Dialogue Box Code
+// Detects when the box shows up and which dialogue to display
 function checkTimer() {
   if (showBox === true && state === "gamelv01") {
     showDialog(level01Dialogue);
   }
+  if (showBox === true && state === "gamelv02") {
+    showDialog(level02Dialogue);
+  }
 }
+
+// determines what the size and appearnce of the dialogue is plus the array
+function showDialog(dialogue) {
+
+  // The background box
+  push();
+  fill(0);
+  stroke(255);
+  strokeWeight(3);
+  rect(speechBox.x, speechBox.y, speechBox.width, speechBox.height);
+  pop();
+
+  //the dialogue itself
+  push();
+  fill(255);
+  textSize(18);
+  text(dialogue[dialogueIndex], speechBox.x + speechBox.padding, speechBox.y + speechBox.padding, speechBox.width - 2 * speechBox.padding, speechBox.height - 2 * speechBox.padding);
+  pop();
+}
+
+
+// Activates the start screen and also pushes dialogue through the array
+function mousePressed() {
+  if (state === "title") {
+    state = "gamelv01";
+    setTimeout(showTheDialog, 1000);
+  }
+  if (state === "gamelv01" && showBox === true) {
+    dialogueIndex++;
+    if (dialogueIndex === level01Dialogue.length) {
+      showBox = false;
+    }
+
+
+  }
+
+
+  if (state === "gamelv02") {
+    showTheDialog();
+  }
+  if (state === "gamelv02" && showBox === true) {
+    dialogueIndex++;
+    if (dialogueIndex === level02Dialogue.length) {
+      showBox = false;
+    }
+
+
+  }
+
+}
+// 
+function showTheDialog() {
+  showBox = true;
+}
+
+
+
+
 
 function checkVampGemOverlap(gem) {
   // Get distance from paw to candy
@@ -342,49 +476,6 @@ function checkGameOver() {
 
   }
 
-}
-
-
-function showDialog(dialogue) {
-
-  // The background box
-  push();
-  fill(0);
-  stroke(255);
-  strokeWeight(3);
-  rect(speechBox.x, speechBox.y, speechBox.width, speechBox.height);
-  pop();
-
-  // The text
-  // Note how we're using extra arguments in text() to specify
-  // the dimensions we want the text to wrap inside, including
-  // using the padding of the dialog box
-  push();
-  fill(255);
-  textSize(18);
-  text(dialogue[dialogueIndex], speechBox.x + speechBox.padding, speechBox.y + speechBox.padding, speechBox.width - 2 * speechBox.padding, speechBox.height - 2 * speechBox.padding);
-  pop();
-}
-
-function mousePressed() {
-  if (state === "title") {
-    state = "gamelv01";
-    setTimeout(showTheDialog, 1000);
-  }
-  if (state === "gamelv01" && showBox === true) {
-    dialogueIndex++;
-    if (dialogueIndex === level01Dialogue.length) {
-      showBox = false;
-    }
-
-
-  }
-
-
-}
-
-function showTheDialog() {
-  showBox = true;
 }
 
 
