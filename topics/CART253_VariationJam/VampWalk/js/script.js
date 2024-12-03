@@ -70,7 +70,7 @@ let vamp = {
   speed: 1,
   velocity: 4,
   size: 20,
-  falling: false,
+  falling: true,
 
 };
 
@@ -145,8 +145,8 @@ function title() {
 function gamelv01() {
   background("#000000");
   moveVamp();
-  // checkVampPathOverlap(lv01path01);
-  // checkVampPathOverlap(lv01path01);
+  checklv01Paths();
+
   if (vamp.falling) {
     drawVamp();
     drawlv01Paths();
@@ -164,6 +164,9 @@ function gamelv01() {
   //Check if vamp has fallen and died
   checkGameOver();
 }
+
+
+
 function gamelv02() {
   background("#1f4391");
 };
@@ -251,15 +254,6 @@ function resetSprite() {
 
 
 
-//Functions that deal with the dialogue box timer
-// function dialogCountUp() {
-//   dialogueTimer += 1;
-//   if (dialogueTimer)
-// }
-
-// displays the timer
-
-//When the timer reaches 0, this will choose which reasult will happen
 function checkTimer() {
   if (showBox === true && state === "gamelv01") {
     showDialog(level01Dialogue);
@@ -277,45 +271,34 @@ function checkVampGemOverlap(gem) {
   }
 }
 
-//Vamp path interaction
-// function checkVampPathOverlap(path) {
-//   // First: is the right side of the user rect to the right or the left side of the target?
-//   const vampPathOverlap = (vamp.x + vamp.size / 2 > path.x - path.height / 2 &&
-//     // Second: is the left side of the user rect to the left of the right side of the target?
-//     vamp.x - vamp.size / 2 < path.x + path.height / 2 &&
-//     // Third: is the bottom of the user rect below the top of the target?
-//     vamp.y + vamp.size / 2 > path.y - path.width / 2 &&
-//     // Fourth: is the top of the user rect above the bottom of the target?
-//     vamp.y - vamp.size / 2 < path.y + path.width / 2);
-//   if (!vampPathOverlap) {
-
-//     vamp.falling = true;
 
 
-//   }
 
-// }
+function checklv01Paths() {
+  // Assume they are falling (we will try to "prove" they aren't)
+  vamp.falling = true;
+  // Go through *every* pTH
+  for (let lv01path of lv01paths) {
+    // Check if the player overlaps this path and aren't falling
+    if (vamp.x + vamp.size / 2 > lv01path.x - lv01path.height / 2 &&
+      // Second: is the left side of the user rect to the left of the right side of the target?
+      vamp.x - vamp.size / 2 < lv01path.x + lv01path.height / 2 &&
+      // Third: is the bottom of the user rect below the top of the target?
+      vamp.y + vamp.size / 2 > lv01path.y - lv01path.width / 2 &&
+      // Fourth: is the top of the user rect above the bottom of the target?
+      vamp.y - vamp.size / 2 < lv01path.y + lv01path.width / 2) {
+      // If they do overlap it, they are NOT falling
+      vamp.falling = false;
+      // Can stop the loop because we found one the player is standing on
+      break;
+    }
+  }
 
-
-// function checkPaths() {
-//   // Assume they are falling (we will try to "prove" they aren't)
-//   let fall = true;
-//   // Go through *every* pTH
-//   for (let path of paths) {
-//     // Check if the player overlaps this path and aren't falling
-//     if (player overlaps this path and is not already falling) {
-//       // If they do overlap it, they are NOT falling
-//       fall = false;
-//       // Can stop the loop because we found one the player is standing on
-//       break;
-//     }
-//   }
-//   // If we get through the full loop and fall is still true, then
-//   // there was NO path they were standing on, so they fall
-//   if (fall) {
-//     // Make the player fall
-//   }
-// }
+  if (vamp.falling === true) {
+    vamp.y = vamp.y + vamp.velocity;
+  }
+  console.log();
+}
 
 
 function checkGameOver() {
