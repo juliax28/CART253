@@ -74,19 +74,23 @@ let vamp = {
 
 };
 
-let lv01path01 = {
-  x: 200,
-  y: 100,
-  height: 55,
-  width: 200,
-};
+let paths = [
+  {
+    x: 200,
+    y: 100,
+    height: 55,
+    width: 200,
+  }
 
-let lv01path02 = {
-  x: 200,
-  y: 25,
-  height: 300,
-  width: 50,
-};
+{
+    x: 200,
+    y: 25,
+    height: 300,
+    width: 50,
+  }
+]
+
+
 
 const lv01Gem = {
   x: 200,
@@ -289,6 +293,28 @@ function checkVampPathOverlap(path) {
   }
 
 }
+
+
+function checkPaths() {
+  // Assume they are falling (we will try to "prove" they aren't)
+  let fall = true;
+  // Go through *every* pTH
+  for (let path of paths) {
+    // Check if the player overlaps this path and aren't falling
+    if (player overlaps this path and is not already falling) {
+      // If they do overlap it, they are NOT falling
+      fall = false;
+      // Can stop the loop because we found one the player is standing on
+      break;
+    }
+  }
+  // If we get through the full loop and fall is still true, then
+  // there was NO path they were standing on, so they fall
+  if (fall) {
+    // Make the player fall
+  }
+}
+
 
 function checkGameOver() {
   if (vamp.y > canvas.height) {
