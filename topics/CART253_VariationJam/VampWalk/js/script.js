@@ -23,7 +23,12 @@ let state = "title"
 
 const level01Dialogue = [
   "Ouch... my head...",
-  "Wait... what is this place...?",
+  // "Wait... what is this place...?",
+  // "I must've fallen into the dungeon... I have to be careful.",
+
+  // "And... oh! A GEM!",
+  // "I should get to it...that's how it usually works, right?",
+  // "One must reach the shiny thing on the other end to get out...",
 
 ];
 
@@ -38,7 +43,7 @@ let showBox = false;
 // Dialog box specification
 let speechBox = {
   x: 50,
-  y: 100,
+  y: 150,
   width: 300,
   height: 80,
   padding: 20,
@@ -64,8 +69,8 @@ function preload() {
 };
 
 let vamp = {
-  x: 200,
-  y: 200,
+  x: 10,
+  y: 170,
   sprite: undefined,
   speed: 1,
   velocity: 4,
@@ -77,24 +82,53 @@ let vamp = {
 
 let lv01paths = [
   {
-    x: 200,
+    x: 0,
     y: 100,
     height: 55,
     width: 200,
   },
 
   {
-    x: 200,
-    y: 25,
-    height: 300,
-    width: 50,
-  }
+    x: 100,
+    y: 150,
+    height: 150,
+    width: 10,
+  },
+
+  {
+    x: 180,
+    y: 105,
+    height: 10,
+    width: 100,
+  },
+
+  {
+    x: 225,
+    y: 50,
+    height: 100,
+    width: 10,
+  },
+
+  {
+    x: 300,
+    y: 150,
+    height: 100,
+    width: 10,
+  },
+
+  {
+    x: 450,
+    y: 200,
+    height: 250,
+    width: 5,
+  },
+
 ]
 
 
 const lv01Gem = {
-  x: 200,
-  y: 150,
+  x: 550,
+  y: 195,
   size: 5,
   sprite: undefined,
 
@@ -145,14 +179,14 @@ function title() {
 function gamelv01() {
   background("#000000");
   moveVamp();
-  checklv01Paths();
+  checklv01Paths(lv01paths)
 
-  if (vamp.falling) {
+  if (vamp.falling === true) {
     drawVamp();
-    drawlv01Paths();
+    drawPaths(lv01paths);
   }
   else {
-    drawlv01Paths();
+    drawPaths(lv01paths);
     drawVamp();
   }
   // dialogCountUp();
@@ -169,6 +203,8 @@ function gamelv01() {
 
 function gamelv02() {
   background("#1f4391");
+  drawVamp();
+  moveVamp();
 };
 
 function GameOver() {
@@ -186,13 +222,14 @@ function drawVamp() {
 
 }
 
-function drawlv01Paths() {
+function drawPaths(paths) {
 
-  for (let lv01path of lv01paths) {
-    push();
+  for (let path of paths) {
+    push(); drawPaths
     fill("#807676");
+    noStroke();
     rectMode(CENTER);
-    rect(lv01path.x, lv01path.y, lv01path.height, lv01path.width);
+    rect(path.x, path.y, path.height, path.width);
     pop();
   }
 
@@ -274,19 +311,19 @@ function checkVampGemOverlap(gem) {
 
 
 
-function checklv01Paths() {
+function checklv01Paths(paths) {
   // Assume they are falling (we will try to "prove" they aren't)
   vamp.falling = true;
   // Go through *every* pTH
-  for (let lv01path of lv01paths) {
+  for (let path of paths) {
     // Check if the player overlaps this path and aren't falling
-    if (vamp.x + vamp.size / 2 > lv01path.x - lv01path.height / 2 &&
+    if (vamp.x + vamp.size / 2 > path.x - path.height / 2 &&
       // Second: is the left side of the user rect to the left of the right side of the target?
-      vamp.x - vamp.size / 2 < lv01path.x + lv01path.height / 2 &&
+      vamp.x - vamp.size / 2 < path.x + path.height / 2 &&
       // Third: is the bottom of the user rect below the top of the target?
-      vamp.y + vamp.size / 2 > lv01path.y - lv01path.width / 2 &&
+      vamp.y + vamp.size / 2 > path.y - path.width / 2 &&
       // Fourth: is the top of the user rect above the bottom of the target?
-      vamp.y - vamp.size / 2 < lv01path.y + lv01path.width / 2) {
+      vamp.y - vamp.size / 2 < path.y + path.width / 2) {
       // If they do overlap it, they are NOT falling
       vamp.falling = false;
       // Can stop the loop because we found one the player is standing on
@@ -295,9 +332,6 @@ function checklv01Paths() {
     }
   }
 
-  if (vamp.falling === true) {
-    vamp.y = vamp.y + vamp.velocity;
-  }
 
 }
 
