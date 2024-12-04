@@ -13,7 +13,7 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
-let state = "title"
+let state = "gamelv02"
 
 
 //Levels Dialogues
@@ -23,17 +23,18 @@ let state = "title"
 
 const level01Dialogue = [
   "Ouch... my head...",
-  // "Wait... what is this place...?",
-  // "I must've fallen into the dungeon... I have to be careful.",
+  "Wait... what is this place...?",
+  "I must've fallen into the dungeon... I have to be careful.",
 
-  // "And... oh! A GEM!",
-  // "I should get to it...that's how it usually works, right?",
-  // "One must reach the shiny thing on the other end to get out...",
+  "And... oh! A GEM!",
+  "I should get to it...that's how it usually works, right?",
+  "One must reach the shiny thing on the other end to get out...",
 
 ];
 
 const level02Dialogue = [
-  "Ouch... my head...",
+  "HUH?",
+  "Another room?!",
   // "Wait... what is this place...?",
   // "I must've fallen into the dungeon... I have to be careful.",
 
@@ -108,29 +109,29 @@ let lv01paths = [
 
   {
     x: 180,
-    y: 105,
+    y: 100,
     height: 10,
-    width: 100,
+    width: 110,
   },
 
   {
-    x: 225,
+    x: 240,
     y: 50,
-    height: 100,
+    height: 120,
     width: 10,
   },
 
   {
     x: 300,
-    y: 150,
-    height: 100,
-    width: 10,
+    y: 121.5,
+    height: 5,
+    width: 153,
   },
 
   {
     x: 450,
     y: 200,
-    height: 250,
+    height: 306,
     width: 5,
   },
 
@@ -189,8 +190,6 @@ const lv01Gem = {
 }
 
 
-let dialogueTimer = 0;
-
 
 
 function setup() {
@@ -245,13 +244,9 @@ function gamelv01() {
     drawPaths(lv01paths);
     drawVamp();
   }
-  // dialogCountUp();
+
   drawGem(lv01Gem);
   checkVampGemOverlap(lv01Gem);
-
-
-  // showDialogue();
-  //Check if vamp has fallen and died
   checkGameOver();
 }
 
@@ -271,13 +266,9 @@ function gamelv02() {
     drawPaths(lv02paths);
     drawVamp();
   }
-  // dialogCountUp();
-  drawGem(lv01Gem);
-  checkVampGemOverlap(lv01Gem);
 
 
-  // showDialogue();
-  //Check if vamp has fallen and died
+
   checkGameOver();
 };
 
@@ -370,9 +361,14 @@ function checkTimer() {
   if (showBox === true && state === "gamelv01") {
     showDialog(level01Dialogue);
   }
+
+  if (state === "gamelv02") {
+    showTheDialog();
+  }
   if (showBox === true && state === "gamelv02") {
     showDialog(level02Dialogue);
   }
+
 }
 
 // determines what the size and appearnce of the dialogue is plus the array
@@ -409,11 +405,6 @@ function mousePressed() {
 
 
   }
-
-
-  if (state === "gamelv02") {
-    showTheDialog();
-  }
   if (state === "gamelv02" && showBox === true) {
     dialogueIndex++;
     if (dialogueIndex === level02Dialogue.length) {
@@ -421,8 +412,8 @@ function mousePressed() {
     }
 
 
-  }
 
+  }
 }
 // 
 function showTheDialog() {
