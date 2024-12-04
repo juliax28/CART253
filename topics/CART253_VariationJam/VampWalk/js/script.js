@@ -181,6 +181,30 @@ let lv02paths = [
 
 ]
 
+
+let lv02Barrier01 =
+{
+  x: 100,
+  y: 100,
+  height: 100,
+  width: 10,
+  velocity: 5,
+  rVelocity: -5,
+  maxX: 500,
+}
+let lv02Barrier02 =
+{
+  x: 100,
+  y: 50,
+  height: 110,
+  width: 10,
+  velocity: 10,
+  rVelocity: -10,
+  maxX: 500,
+}
+
+
+
 const lv01Gem = {
   x: 550,
   y: 195,
@@ -188,6 +212,7 @@ const lv01Gem = {
   sprite: undefined,
 
 }
+
 
 
 
@@ -266,8 +291,10 @@ function gamelv02() {
     drawPaths(lv02paths);
     drawVamp();
   }
-
-
+  drawBarriers(lv02Barrier01);
+  moveBarriers(lv02Barrier01);
+  drawBarriers(lv02Barrier02);
+  moveBarriers(lv02Barrier02);
 
   checkGameOver();
 };
@@ -431,7 +458,6 @@ function checkVampGemOverlap(gem) {
   const gemAquired = (d < vamp.size / 2 + gem.size / 2);
   if (gemAquired) {
     state = "gamelv02";
-    console.log();
   }
 }
 
@@ -471,6 +497,25 @@ function checkGameOver() {
 
 }
 
+//barriers to avoid in level 02
+
+//draw the barriers in an array
+
+function drawBarriers(barrier) {
+  push(); drawPaths
+  fill("#4edd1c");
+  noStroke();
+  rectMode(CENTER);
+  rect(barrier.x, barrier.y, barrier.height, barrier.width);
+  pop();
 
 
+}
+// Mve the barriers side to side
+function moveBarriers(barrier) {
+  barrier.x = barrier.x + barrier.velocity;
+  if (barrier.x >= barrier.maxX) {
+    barrier.x = barrier.x - barrier.velocity;
+  }
 
+}
