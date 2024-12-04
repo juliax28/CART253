@@ -86,7 +86,7 @@ let vamp = {
   speed: 1,
   velocity: 4,
   size: 20,
-  falling: true,
+  falling: false,
 
 };
 
@@ -234,13 +234,14 @@ function title() {
 function gamelv01() {
   background("#000000");
   moveVamp();
-  checklv01Paths(lv01paths)
+
 
   if (vamp.falling === true) {
     drawVamp();
     drawPaths(lv01paths);
   }
   else {
+    checklv01Paths(lv01paths)
     drawPaths(lv01paths);
     drawVamp();
   }
@@ -259,13 +260,14 @@ function gamelv01() {
 function gamelv02() {
   background("#1f4391");
   moveVamp();
-  checklv01Paths(lv02paths)
+
 
   if (vamp.falling === true) {
     drawVamp();
     drawPaths(lv02paths);
   }
   else {
+    checklv01Paths(lv02paths)
     drawPaths(lv02paths);
     drawVamp();
   }
