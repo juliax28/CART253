@@ -190,7 +190,9 @@ let lv02Barrier01 =
   width: 10,
   velocity: 5,
   rVelocity: -5,
+  retVelocity: 5,
   maxX: 500,
+  minX: 100
 }
 let lv02Barrier02 =
 {
@@ -200,7 +202,9 @@ let lv02Barrier02 =
   width: 10,
   velocity: 10,
   rVelocity: -10,
+  retVelocity: 10,
   maxX: 500,
+  minX: 100
 }
 
 
@@ -513,9 +517,12 @@ function drawBarriers(barrier) {
 }
 // Mve the barriers side to side
 function moveBarriers(barrier) {
-  barrier.x = barrier.x + barrier.velocity;
-  if (barrier.x >= barrier.maxX) {
-    barrier.x = barrier.x - barrier.velocity;
+  barrier.x += barrier.velocity;
+  if (barrier.x > barrier.maxX) {
+    barrier.velocity = -barrier.velocity;
+  }
+  else if (barrier.x < barrier.minX) {
+    barrier.velocity = -barrier.velocity
   }
 
 }
