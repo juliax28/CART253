@@ -35,12 +35,6 @@ const level01Dialogue = [
 const level02Dialogue = [
   "HUH?",
   "Another room?!",
-  // "Wait... what is this place...?",
-  // "I must've fallen into the dungeon... I have to be careful.",
-
-  // "And... oh! A GEM!",
-  // "I should get to it...that's how it usually works, right?",
-  // "One must reach the shiny thing on the other end to get out...",
 
 ];
 
@@ -78,7 +72,9 @@ function preload() {
   vampSprites.down = loadImage("assets/images/vampDown.PNG")
   vampSprites.idle = loadImage("assets/images/vampDown.PNG")
   lv01Gem.sprite = loadImage("assets/images/gem01.png")
+  lv02Gem.sprite = loadImage("assets/images/gem01.png")
 };
+
 
 let vamp = {
   x: 10,
@@ -217,6 +213,14 @@ const lv01Gem = {
 
 }
 
+const lv02Gem = {
+  x: 10,
+  y: 100,
+  size: 5,
+  sprite: undefined,
+
+}
+
 
 
 
@@ -242,13 +246,17 @@ function draw() {
   if (state === "gamelv02") {
     gamelv02();
   }
+  if (state === "gamelv03") {
+    gamelv03();
+  }
   if (state === "GameOver") {
     GameOver();
   }
+
   checkTimer();
 }
 
-//draw the vamp
+//Title screen
 function title() {
   background("#ad2222");
 }
@@ -257,7 +265,7 @@ function title() {
 
 
 
-
+// functions for level 01
 
 function gamelv01() {
   background("#000000");
@@ -280,7 +288,7 @@ function gamelv01() {
 }
 
 
-
+// functions for level 02
 function gamelv02() {
   background("#1f4391");
   moveVamp();
@@ -299,9 +307,18 @@ function gamelv02() {
   moveBarriers(lv02Barrier01);
   drawBarriers(lv02Barrier02);
   moveBarriers(lv02Barrier02);
-
+  checkBarrierOverlap(lv02Barrier01);
+  checkBarrierOverlap(lv02Barrier02);
+  drawGem(lv02Gem);
+  checkVampGemOverlap02(lv02Gem);
   checkGameOver();
 };
+
+function gamelv03() {
+  background("#d29e1c");
+}
+
+
 
 
 function GameOver() {
@@ -456,15 +473,23 @@ function showTheDialog() {
 
 
 function checkVampGemOverlap(gem) {
-  // Get distance from paw to candy
+  // Get distance from vamp to gem
   const d = dist(vamp.x, vamp.y, gem.x, gem.y);
   // Check if it's an overlap
   const gemAquired = (d < vamp.size / 2 + gem.size / 2);
-  if (gemAquired) {
+  if (gemAquired && state === "gamelv01") {
     state = "gamelv02";
   }
 }
-
+function checkVampGemOverlap02(gem) {
+  // Get distance from vamp to gem
+  const d = dist(vamp.x, vamp.y, gem.x, gem.y);
+  // Check if it's an overlap
+  const gemAquired = (d < vamp.size / 2 + gem.size / 2);
+  if (gemAquired && state === "gamelv02") {
+    state = "gamelv03";
+  }
+}
 
 
 
@@ -525,4 +550,18 @@ function moveBarriers(barrier) {
     barrier.velocity = -barrier.velocity
   }
 
+}
+
+// Vamp interacts with the barrier
+function checkBarrierOverlap(barrier) {
+  if (vamp.x + vamp.size / 2 > barrier.x - barrier.height / 2 &&
+    // Second: is the left side of the user rect to the left of the right side of the target?
+    vamp.x - vamp.size / 2 < barrier.x + barrier.height / 2 &&
+    // Third: is the bottom of the user rect below the top of the target?
+    vamp.y + vamp.size / 2 > barrier.y - barrier.width / 2 &&
+    // Fourth: is the top of the user rect above the bottom of the target?
+    vamp.y - vamp.size / 2 < barrier.y + barrier.width / 2) {
+    // If they do overlap it, they are NOT falling
+    vamp.falling = true;
+  }
 }
