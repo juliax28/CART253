@@ -13,7 +13,7 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
-let state = "gamelv01"
+let state = "gamelv02"
 
 
 //Levels Dialogues
