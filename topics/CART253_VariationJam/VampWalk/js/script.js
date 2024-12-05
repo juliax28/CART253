@@ -1,5 +1,5 @@
 /**
- * VampWalk
+ * Cycle
  * Julia Axiuk
  *
  * Oh no! You've fallen into the dungeons with seemingly no way out. But this is a video game, after all, 
