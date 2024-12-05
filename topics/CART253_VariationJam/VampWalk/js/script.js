@@ -147,32 +147,59 @@ let lv02paths = [
     width: 10,
   },
 
-  {
-    x: 180,
-    y: 105,
-    height: 10,
-    width: 100,
-  },
 
   {
     x: 225,
-    y: 50,
+    y: 30,
+    height: 100,
+    width: 10,
+  },
+  {
+    x: 500,
+    y: 30,
     height: 100,
     width: 10,
   },
 
   {
-    x: 325,
-    y: 150,
+    x: 550,
+    y: 113,
     height: 10,
-    width: 106,
+    width: 176,
   },
 
   {
     x: 450,
+    y: 113,
+    height: 10,
+    width: 176,
+  },
+
+  {
+    x: 550,
     y: 200,
-    height: 250,
+    height: 100,
     width: 5,
+  },
+  {
+    x: 305,
+    y: 200,
+    height: 300,
+    width: 3,
+  },
+
+  {
+    x: 270,
+    y: 113,
+    height: 10,
+    width: 176,
+  },
+
+  {
+    x: 179,
+    y: 95,
+    height: 8,
+    width: 120,
   },
 
 ]
@@ -184,9 +211,8 @@ let lv02Barrier01 =
   y: 100,
   height: 100,
   width: 10,
-  velocity: 5,
-  rVelocity: -5,
-  retVelocity: 5,
+  velocity: 3,
+  rVelocity: -3,
   maxX: 500,
   minX: 100
 }
@@ -196,9 +222,8 @@ let lv02Barrier02 =
   y: 50,
   height: 110,
   width: 10,
-  velocity: 10,
-  rVelocity: -10,
-  retVelocity: 10,
+  velocity: 5,
+  rVelocity: -5,
   maxX: 500,
   minX: 100
 }
@@ -253,7 +278,7 @@ function draw() {
     GameOver();
   }
 
-  checkTimer();
+  // checkTimer();
 }
 
 //Title screen
@@ -316,6 +341,8 @@ function gamelv02() {
 
 function gamelv03() {
   background("#d29e1c");
+  drawVamp();
+  moveVamp();
 }
 
 
@@ -405,19 +432,19 @@ function resetSprite() {
 
 // Dialogue Box Code
 // Detects when the box shows up and which dialogue to display
-function checkTimer() {
-  if (showBox === true && state === "gamelv01") {
-    showDialog(level01Dialogue);
-  }
+// function checkTimer() {
+//   if (showBox === true && state === "gamelv01") {
+//     showDialog(level01Dialogue);
+//   }
 
-  if (state === "gamelv02") {
-    showTheDialog();
-  }
-  if (showBox === true && state === "gamelv02") {
-    showDialog(level02Dialogue);
-  }
+//   if (state === "gamelv02") {
+//     showTheDialog();
+//   }
+//   if (showBox === true && state === "gamelv02") {
+//     showDialog(level02Dialogue);
+//   }
 
-}
+// }
 
 // determines what the size and appearnce of the dialogue is plus the array
 function showDialog(dialogue) {
@@ -480,6 +507,9 @@ function checkVampGemOverlap(gem) {
   if (gemAquired && state === "gamelv01") {
     state = "gamelv02";
   }
+  // if (gemAquired && state === "gamelv02") {
+  //   state = "gamelv03";
+  // }
 }
 function checkVampGemOverlap02(gem) {
   // Get distance from vamp to gem
