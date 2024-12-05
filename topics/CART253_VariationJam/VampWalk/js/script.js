@@ -2,8 +2,11 @@
  * VampWalk
  * Julia Axiuk
  *
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * Oh no! You've fallen into the dungeons with seemingly no way out. But this is a video game, after all, 
+ * and videogames come with a way out, right? As an immortal vampire, navigate through the perilous dungeon paths on your journey out, all without ever truly dying.
+ * Spoiler alert, there is no way out. The game restarts, bringing you back to the start after hitting rock bottom again and again. How many times
+ * will you try to escape before giving up? HINT: this isn't just about vampires and dungeons. 
+
  */
 
 "use strict";
@@ -11,15 +14,16 @@
 
 
 /**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
+ * 
 */
+
+//Starting State
 let state = "title"
 
 
-//Levels Dialogues
-
 
 //Level 01 Dialogue
+//Arrays that will be put into the dialogue functions
 
 const level01Dialogue = [
   "Ouch... my head...",
@@ -31,6 +35,8 @@ const level01Dialogue = [
   "One must reach the shiny thing on the other end to get out...",
 
 ];
+
+
 
 const level02Dialogue = [
   "HUH?",
@@ -46,16 +52,19 @@ const level03Dialogue = [
 
 ];
 
+//Canvas dimensions, put here for more felxibility in the program
 let canvas = {
   height: 240,
   width: 580,
 }
-//dialogue index
+
+//dialogue index, what will determine which line of dialogue is shown, gets reset when the vamp touches the gem or falls
 
 let dialogueIndex = 0;
+//showbox determines when the dialogue box will be shown when set to true
 let showBox = false;
-let dialogueTimer = 0;
-// Dialog box specification
+
+// Dialog box specification, taken from the 'Romans' example 
 let speechBox = {
   x: 50,
   y: 150,
@@ -64,7 +73,7 @@ let speechBox = {
   padding: 20,
   fontSize: 18
 };
-
+//Will determine which images are shown of the vamp when different keys are pressed
 const vampSprites = {
   left: undefined,
   right: undefined,
@@ -73,7 +82,7 @@ const vampSprites = {
   idle: undefined,
 
 };
-
+//preloading sprites of vamp and the gems
 function preload() {
   vampSprites.left = loadImage("assets/images/vampLeft.PNG")
   vampSprites.right = loadImage("assets/images/vampRight.PNG")
@@ -84,19 +93,20 @@ function preload() {
   lv02Gem.sprite = loadImage("assets/images/gem01.png")
 };
 
-
+//vampire attributes
 let vamp = {
   x: 10,
   y: 170,
   sprite: undefined,
-  speed: 1,
+  //speed the vamp falls at
   velocity: 4,
   size: 20,
+  //determines when the vamp is falling when set to true
   falling: false,
 
 };
 
-
+// path dimensions in an array that will each be checked cyclically to determine if the vamp is overlapping (and therefore not falling)
 let lv01paths = [
   {
     x: 0,
@@ -141,6 +151,7 @@ let lv01paths = [
   },
 
 ]
+//Level 02 paths
 let lv02paths = [
   {
     x: 0,
@@ -236,6 +247,8 @@ let lv02paths = [
   },
 
 ]
+
+//level 03 paths
 let lv03paths = [
   {
     x: 0,
@@ -251,6 +264,8 @@ let lv03paths = [
   },
 ]
 
+
+// moving barriers in level 02
 let lv02Barrier01 =
 {
   x: 100,
@@ -275,7 +290,7 @@ let lv02Barrier02 =
 }
 
 
-
+//Gem dimensions
 const lv01Gem = {
   x: 550,
   y: 195,
@@ -295,7 +310,7 @@ const lv02Gem = {
 
 
 
-
+// SETUP: create the canvas and preload the idle vamp sprite.
 function setup() {
   createCanvas(canvas.width, canvas.height);
   vamp.sprite = vampSprites.idle;
@@ -363,7 +378,7 @@ function gamelv02() {
   background("#1f4391");
   moveVamp();
 
-
+  // determines if the vamp is drawn in front of of in back of the paths to prevent him from 'refalling' onto the path
   if (vamp.falling === true) {
     drawVamp();
     drawPaths(lv02paths);
@@ -380,37 +395,46 @@ function gamelv02() {
   checkBarrierOverlap(lv02Barrier01);
   checkBarrierOverlap(lv02Barrier02);
   drawGem(lv02Gem);
+  //seperate gem ovverlap function to differentiate between the one that would bring the vamp from level 01 --> 02 and level 02 --> 03.
+  //not ideal but it works this way without any bugs
   checkVampGemOverlap02(lv02Gem);
   checkGameOver();
+  //activates the dialogue that doesn't use the timer in level 02 and 03
   dialogueOnStateChange();
 };
 
+
+// functions for level 03
 function gamelv03() {
   background("#d29e1c");
   drawVamp();
   moveVamp();
+  // determines if the vamp is drawn in front of of in back of the paths to prevent him from 'refalling' onto the path
   if (vamp.falling === true) {
     drawVamp();
     drawPaths(lv03paths);
   }
   else {
+    //checks for the overlap of vamp and paths
     checklv01Paths(lv03paths)
     drawPaths(lv03paths);
     drawVamp();
 
   }
+  //quick fix for an issue, had to make a seperate game over function, otherwise it would loop back to the 'Game Over' state even if specified otherwise
   checkGameOver02();
+  //activates the dialogue that doesn't use the timer in level 02 and 03
   dialogueOnStateChange();
 }
 
 
 
-
+//'lose' screen. Not really dead because of course vampires don't die, they're immortal!
 function GameOver() {
   background("#ff36c8");
 }
 
-
+//draws our vampire
 function drawVamp() {
   push();
   fill("#FFFFFF");
@@ -420,7 +444,7 @@ function drawVamp() {
   pop();
 
 }
-
+//draws the paths in a for loop
 function drawPaths(paths) {
 
   for (let path of paths) {
@@ -433,14 +457,15 @@ function drawPaths(paths) {
   }
 
 }
-
+//draws the gems 
 function drawGem(gem) {
   ellipse(gem.x, gem.y, gem.size);
   image(gem.sprite, gem.x, gem.y);
   imageMode(CENTER);
 }
 
-//move the vamp
+//move the vamp with the arrow keys 
+//animated variable determines if the vampire is moving or not, if not it defaults back to the 'idle' sprite
 
 function moveVamp() {
   let animated = false;
@@ -481,7 +506,7 @@ function moveVamp() {
   }
 
 }
-
+// resets the vamp back to the idle sprite when not moving
 function resetSprite() {
   vamp.sprite = vampSprites.idle;
 
@@ -491,19 +516,19 @@ function resetSprite() {
 // Dialogue Box Code
 // Detects when the box shows up and which dialogue to display
 
-
-// 
+//showbox ---> variable that determies if the conditions ar eright to display dialogue
 function showTheDialog() {
   showBox = true;
 }
-
+// in the first level, the dialogue box is timed after a moment's of hesitation from our poor esitential vampire. This
+//check determines when he is done thinking
 function checkTimer() {
   if (showBox === true && state === "gamelv01") {
     showDialog(level01Dialogue);
   }
 
 }
-
+// separate dialogue function that is separate from the timer
 function dialogueOnStateChange() {
 
   if (state === "gamelv02" && showBox === true) {
@@ -514,7 +539,7 @@ function dialogueOnStateChange() {
   }
 }
 
-// determines what the size and appearnce of the dialogue is plus the array
+// determines what the size and appearnce of the dialogue is plus the array, again taken from the 'Romans' example 
 function showDialog(dialogue) {
 
   // The background box
@@ -534,7 +559,7 @@ function showDialog(dialogue) {
 }
 
 
-// Activates the start screen and also pushes dialogue through the array
+// Activates the start screen and also pushes dialogue through the array. Once the array is done, showbox will go back to false and the text and box will stop being drawn
 function mousePressed() {
   if (state === "title") {
     state = "gamelv01";
@@ -573,7 +598,7 @@ function mousePressed() {
 
 
 
-
+// Gem interaction. The gems bring the player to the next level. the dialogue index is also reset when this happens.
 
 function checkVampGemOverlap(gem) {
   // Get distance from vamp to gem
@@ -587,7 +612,9 @@ function checkVampGemOverlap(gem) {
   }
 
 }
-
+// For some reason I was having some issues with just setting that if state === currentstate, then when the gem is overlapped the state changes.
+//For some reason the program would get confused and not work. To fix this quickly I made another functiion,
+//again, not ideal but it works.
 function checkVampGemOverlap02(gem) {
   // Get distance from vamp to gem
   const d = dist(vamp.x, vamp.y, gem.x, gem.y);
@@ -601,9 +628,10 @@ function checkVampGemOverlap02(gem) {
 }
 
 
-
+// Taken from the overlapping rectangles in class example, but changed to include the Vamp's circle
 function checklv01Paths(paths) {
   // Assume they are falling (we will try to "prove" they aren't)
+  // Code altered later by Pippin and addded vamp.falling to prove the player isn't already falling 
   vamp.falling = true;
   // Go through *every* pTH
   for (let path of paths) {
@@ -626,7 +654,9 @@ function checklv01Paths(paths) {
 
 }
 
+//Game over settings --> what happens wehn the player falls
 
+//Regualr game over, brings the player to the game over screen
 function checkGameOver() {
   if (vamp.y > canvas.height) {
     state = "GameOver";
@@ -634,6 +664,7 @@ function checkGameOver() {
   }
 
 }
+// level 03 game over which resets us to the first level (a never ending loop...)
 function checkGameOver02() {
   if (vamp.y > canvas.height) {
     state = "title";
@@ -641,7 +672,7 @@ function checkGameOver02() {
     dialogueIndex = 0;
   }
 }
-
+// resets the vamp at level 03 so that he re-appears in the right place in level 01 when the game restarts
 function resetVamp() {
   vamp.x = 10;
   vamp.y = 170;
@@ -663,12 +694,14 @@ function drawBarriers(barrier) {
 
 
 }
-// Mve the barriers side to side
+// M0ve the barriers side to side
+
 function moveBarriers(barrier) {
   barrier.x += barrier.velocity;
   if (barrier.x > barrier.maxX) {
     barrier.velocity = -barrier.velocity;
   }
+  // brings the barrier back the oppsoite way
   else if (barrier.x < barrier.minX) {
     barrier.velocity = -barrier.velocity
   }
@@ -676,6 +709,8 @@ function moveBarriers(barrier) {
 }
 
 // Vamp interacts with the barrier
+// almost the exact same code as the overlapping paths
+
 function checkBarrierOverlap(barrier) {
   if (vamp.x + vamp.size / 2 > barrier.x - barrier.height / 2 &&
     // Second: is the left side of the user rect to the left of the right side of the target?
@@ -684,7 +719,9 @@ function checkBarrierOverlap(barrier) {
     vamp.y + vamp.size / 2 > barrier.y - barrier.width / 2 &&
     // Fourth: is the top of the user rect above the bottom of the target?
     vamp.y - vamp.size / 2 < barrier.y + barrier.width / 2) {
-    // If they do overlap it, they are NOT falling
+    // except this time if he DOES touch the barrier, falling = true 
     vamp.falling = true;
   }
 }
+
+// That's it

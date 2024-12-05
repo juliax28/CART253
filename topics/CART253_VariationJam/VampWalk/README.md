@@ -1,21 +1,20 @@
 # Template p5 Project
 
-Author Name
+Julia Axiuk
 
-[View this project online](URL_FOR_THE_RUNNING_PROJECT)
+[View this project online]
+https://juliax28.github.io/CART253/topics/CART253_VariationJam/VampWalk/
 
 ## Description
+Oh no! You've fallen into the dungeons with seemingly no way out. But this is a video game, after all, and videogames come with a way out, right? As an immortal vampire, navigate through the perilous dungeon paths on your journey out, all without ever truly dying. Spoiler alert, there is no way out. The game restarts, bringing you back to the start after hitting rock bottom again and again. How many times will you try to escape before giving up? HINT: this isn't just about vampires and dungeons. 
 
-This description should help the reader understand what the program is, what any controls do, and perhaps what the desired experience it.
+The idea is to give the player a sense of futile effort, a reflection on how we often feel trapped within our circumstances. The vampire's immortality now feels like a burden.
+
 
 ## Credits
-
-This bit should describe what tools were used. For example:
 
 This project uses [p5.js](https://p5js.org).
 
 ## Attribution
 
-This bit should attribute any assets or other elements used taken from other sources. For example:
-
-The fish images were sourced from the [Creative Commons image "Georgia Aquarium Fish"](https://search.creativecommons.org/photos/96f6f770-eac1-488c-8abb-16bee7bcc874) by Mike Johnston which is licensed with CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.
+Vampire sprites and gem sprites drawn by me.
