@@ -13,7 +13,7 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
-let state = "gamelv02"
+let state = "gamelv01"
 
 
 //Levels Dialogues
@@ -33,6 +33,11 @@ const level01Dialogue = [
 ];
 
 const level02Dialogue = [
+  "HUH?",
+  "Another room?!",
+
+];
+const level03Dialogue = [
   "HUH?",
   "Another room?!",
 
@@ -249,8 +254,8 @@ let lv02Barrier01 =
   y: 100,
   height: 100,
   width: 10,
-  velocity: 1,
-  rVelocity: -1,
+  velocity: 0.5,
+  rVelocity: -0.5,
   maxX: 500,
   minX: 100
 }
@@ -260,8 +265,8 @@ let lv02Barrier02 =
   y: 50,
   height: 110,
   width: 10,
-  velocity: 2,
-  rVelocity: -2,
+  velocity: 1,
+  rVelocity: -1,
   maxX: 500,
   minX: 100
 }
@@ -389,7 +394,10 @@ function gamelv03() {
     checklv01Paths(lv03paths)
     drawPaths(lv03paths);
     drawVamp();
+
   }
+  checkGameOver02();
+  dialogueOnStateChange();
 }
 
 
@@ -479,6 +487,13 @@ function resetSprite() {
 
 // Dialogue Box Code
 // Detects when the box shows up and which dialogue to display
+
+
+// 
+function showTheDialog() {
+  showBox = true;
+}
+
 function checkTimer() {
   if (showBox === true && state === "gamelv01") {
     showDialog(level01Dialogue);
@@ -487,10 +502,11 @@ function checkTimer() {
 }
 
 function dialogueOnStateChange() {
-  if (state === "gamelv02") {
-    showTheDialog();
-  }
+
   if (state === "gamelv02" && showBox === true) {
+    showDialog(level02Dialogue);
+  }
+  if (state === "gamelv03" && showBox === true) {
     showDialog(level02Dialogue);
   }
 }
@@ -533,16 +549,24 @@ function mousePressed() {
     dialogueIndex++;
     if (dialogueIndex === level02Dialogue.length) {
       showBox = false;
+
+    }
+
+
+
+  }
+  if (state === "gamelv03") {
+    dialogueIndex++;
+    if (dialogueIndex === level03Dialogue.length) {
+      showBox = false;
+
     }
 
 
 
   }
 }
-// 
-function showTheDialog() {
-  showBox = true;
-}
+
 
 
 
@@ -555,11 +579,12 @@ function checkVampGemOverlap(gem) {
   const gemAquired = (d < vamp.size / 2 + gem.size / 2);
   if (gemAquired && state === "gamelv01") {
     state = "gamelv02";
+    dialogueIndex = 0;
+    showTheDialog();
   }
-  // if (gemAquired && state === "gamelv02") {
-  //   state = "gamelv03";
-  // }
+
 }
+
 function checkVampGemOverlap02(gem) {
   // Get distance from vamp to gem
   const d = dist(vamp.x, vamp.y, gem.x, gem.y);
@@ -567,6 +592,8 @@ function checkVampGemOverlap02(gem) {
   const gemAquired = (d < vamp.size / 2 + gem.size / 2);
   if (gemAquired && state === "gamelv02") {
     state = "gamelv03";
+    dialogueIndex = 0;
+    showTheDialog();
   }
 }
 
@@ -604,6 +631,20 @@ function checkGameOver() {
   }
 
 }
+function checkGameOver02() {
+  if (vamp.y > canvas.height) {
+    state = "title";
+    resetVamp();
+
+  }
+}
+
+function resetVamp() {
+  vamp.x = 10;
+  vamp.y = 170;
+  vamp.falling = false;
+}
+
 
 //barriers to avoid in level 02
 
