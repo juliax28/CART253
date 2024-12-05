@@ -58,6 +58,12 @@ let canvas = {
   width: 580,
 }
 
+const screenSprites = {
+  titleScreenSprite: undefined,
+  restartScreenSprite: undefined,
+
+}
+
 //dialogue index, what will determine which line of dialogue is shown, gets reset when the vamp touches the gem or falls
 
 let dialogueIndex = 0;
@@ -84,6 +90,8 @@ const vampSprites = {
 };
 //preloading sprites of vamp and the gems
 function preload() {
+  screenSprites.titleScreenSprite = loadImage("assets/images/titlescreensprite.PNG")
+  screenSprites.restartScreenSprite = loadImage("assets/images/restartscreensprite.PNG")
   vampSprites.left = loadImage("assets/images/vampLeft.PNG")
   vampSprites.right = loadImage("assets/images/vampRight.PNG")
   vampSprites.up = loadImage("assets/images/vampUp.PNG")
@@ -343,7 +351,11 @@ function draw() {
 
 //Title screen
 function title() {
-  background("#ad2222");
+  background("#6f217d");
+  push();
+  imageMode(CENTER);
+  image(screenSprites.titleScreenSprite, width / 2, height / 2);
+  pop();
 }
 
 
@@ -431,7 +443,11 @@ function gamelv03() {
 
 //'lose' screen. Not really dead because of course vampires don't die, they're immortal!
 function GameOver() {
-  background("#ff36c8");
+  background("#6f217d");
+  push();
+  imageMode(CENTER);
+  image(screenSprites.restartScreenSprite, width / 2, height / 2);
+  pop();
 }
 
 //draws our vampire
