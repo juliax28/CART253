@@ -198,7 +198,7 @@ let lv02paths = [
     x: 305,
     y: 200,
     height: 300,
-    width: 3,
+    width: 10,
   },
 
   {
@@ -249,8 +249,8 @@ let lv02Barrier01 =
   y: 100,
   height: 100,
   width: 10,
-  velocity: 3,
-  rVelocity: -3,
+  velocity: 1,
+  rVelocity: -1,
   maxX: 500,
   minX: 100
 }
@@ -260,8 +260,8 @@ let lv02Barrier02 =
   y: 50,
   height: 110,
   width: 10,
-  velocity: 5,
-  rVelocity: -5,
+  velocity: 2,
+  rVelocity: -2,
   maxX: 500,
   minX: 100
 }
@@ -332,7 +332,7 @@ function title() {
 function gamelv01() {
   background("#000000");
   moveVamp();
-  checkTimer();
+
 
   if (vamp.falling === true) {
     drawVamp();
@@ -343,7 +343,7 @@ function gamelv01() {
     drawPaths(lv01paths);
     drawVamp();
   }
-
+  checkTimer();
   drawGem(lv01Gem);
   checkVampGemOverlap(lv01Gem);
   checkGameOver();
@@ -374,6 +374,7 @@ function gamelv02() {
   drawGem(lv02Gem);
   checkVampGemOverlap02(lv02Gem);
   checkGameOver();
+  dialogueOnStateChange();
 };
 
 function gamelv03() {
@@ -483,13 +484,15 @@ function checkTimer() {
     showDialog(level01Dialogue);
   }
 
+}
+
+function dialogueOnStateChange() {
   if (state === "gamelv02") {
     showTheDialog();
   }
-  if (showBox === true && state === "gamelv02") {
+  if (state === "gamelv02" && showBox === true) {
     showDialog(level02Dialogue);
   }
-
 }
 
 // determines what the size and appearnce of the dialogue is plus the array
@@ -526,7 +529,7 @@ function mousePressed() {
 
 
   }
-  if (state === "gamelv02" && showBox === true) {
+  if (state === "gamelv02") {
     dialogueIndex++;
     if (dialogueIndex === level02Dialogue.length) {
       showBox = false;
