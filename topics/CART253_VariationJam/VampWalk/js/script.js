@@ -13,7 +13,7 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
-let state = "gamelv02"
+let state = "gamelv03"
 
 
 //Levels Dialogues
@@ -139,11 +139,17 @@ let lv02paths = [
     height: 55,
     width: 200,
   },
+  {
+    x: 358,
+    y: 150,
+    height: 55,
+    width: 50,
+  },
 
   {
-    x: 100,
+    x: 132,
     y: 150,
-    height: 150,
+    height: 100,
     width: 10,
   },
 
@@ -152,6 +158,12 @@ let lv02paths = [
     x: 225,
     y: 30,
     height: 100,
+    width: 10,
+  },
+  {
+    x: 230,
+    y: 15,
+    height: 300,
     width: 10,
   },
   {
@@ -194,6 +206,12 @@ let lv02paths = [
     height: 10,
     width: 176,
   },
+  {
+    x: 380,
+    y: 70,
+    height: 10,
+    width: 120,
+  },
 
   {
     x: 179,
@@ -201,9 +219,28 @@ let lv02paths = [
     height: 8,
     width: 120,
   },
+  {
+    x: 85,
+    y: 83,
+    height: 10,
+    width: 144,
+  },
 
 ]
-
+let lv03paths = [
+  {
+    x: 0,
+    y: 100,
+    height: 55,
+    width: 200,
+  },
+  {
+    x: 358,
+    y: 150,
+    height: 55,
+    width: 50,
+  },
+]
 
 let lv02Barrier01 =
 {
@@ -239,8 +276,8 @@ const lv01Gem = {
 }
 
 const lv02Gem = {
-  x: 10,
-  y: 100,
+  x: 358,
+  y: 150,
   size: 5,
   sprite: undefined,
 
@@ -343,6 +380,15 @@ function gamelv03() {
   background("#d29e1c");
   drawVamp();
   moveVamp();
+  if (vamp.falling === true) {
+    drawVamp();
+    drawPaths(lv03paths);
+  }
+  else {
+    checklv01Paths(lv03paths)
+    drawPaths(lv03paths);
+    drawVamp();
+  }
 }
 
 
