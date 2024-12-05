@@ -13,7 +13,7 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
-let state = "gamelv03"
+let state = "gamelv01"
 
 
 //Levels Dialogues
@@ -46,6 +46,7 @@ let canvas = {
 
 let dialogueIndex = 0;
 let showBox = false;
+let dialogueTimer = 0;
 // Dialog box specification
 let speechBox = {
   x: 50,
@@ -315,7 +316,6 @@ function draw() {
     GameOver();
   }
 
-  // checkTimer();
 }
 
 //Title screen
@@ -332,7 +332,7 @@ function title() {
 function gamelv01() {
   background("#000000");
   moveVamp();
-
+  checkTimer();
 
   if (vamp.falling === true) {
     drawVamp();
@@ -478,19 +478,19 @@ function resetSprite() {
 
 // Dialogue Box Code
 // Detects when the box shows up and which dialogue to display
-// function checkTimer() {
-//   if (showBox === true && state === "gamelv01") {
-//     showDialog(level01Dialogue);
-//   }
+function checkTimer() {
+  if (showBox === true && state === "gamelv01") {
+    showDialog(level01Dialogue);
+  }
 
-//   if (state === "gamelv02") {
-//     showTheDialog();
-//   }
-//   if (showBox === true && state === "gamelv02") {
-//     showDialog(level02Dialogue);
-//   }
+  if (state === "gamelv02") {
+    showTheDialog();
+  }
+  if (showBox === true && state === "gamelv02") {
+    showDialog(level02Dialogue);
+  }
 
-// }
+}
 
 // determines what the size and appearnce of the dialogue is plus the array
 function showDialog(dialogue) {
