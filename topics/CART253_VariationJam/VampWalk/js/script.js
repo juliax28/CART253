@@ -13,7 +13,7 @@
 /**
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
-let state = "gamelv01"
+let state = "title"
 
 
 //Levels Dialogues
@@ -35,11 +35,14 @@ const level01Dialogue = [
 const level02Dialogue = [
   "HUH?",
   "Another room?!",
+  "I guess... I gotta try again and get the gem",
+  "But I just had it...",
 
 ];
 const level03Dialogue = [
-  "HUH?",
-  "Another room?!",
+  "...",
+  "What?",
+  "Nowhere to go but down...",
 
 ];
 
@@ -507,7 +510,7 @@ function dialogueOnStateChange() {
     showDialog(level02Dialogue);
   }
   if (state === "gamelv03" && showBox === true) {
-    showDialog(level02Dialogue);
+    showDialog(level03Dialogue);
   }
 }
 
@@ -627,7 +630,7 @@ function checklv01Paths(paths) {
 function checkGameOver() {
   if (vamp.y > canvas.height) {
     state = "GameOver";
-
+    dialogueIndex = 0;
   }
 
 }
@@ -635,7 +638,7 @@ function checkGameOver02() {
   if (vamp.y > canvas.height) {
     state = "title";
     resetVamp();
-
+    dialogueIndex = 0;
   }
 }
 
